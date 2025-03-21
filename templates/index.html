@@ -8,18 +8,20 @@
 <body>
     {% if session.username %}
     <p>
-        Olet kirjautunut nimellä {{ session.username }}
+        Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id }}
+    </p>
+
+    <p>
+        <a href="/add_image">Lisää kuva</a>
     </p>
 
     <p>
         <a href="/logout">Kirjaudu ulos</a>
     </p>
 
-    <p>
-        <a href="/register">Luo tunnus</a>
-    </p>
-    
+
     {% else %}
+
     <p>
         Tervetuloa Galleriaan!
 
@@ -29,6 +31,11 @@
     <p>
         <a href="/login">Kirjaudu sisään</a>
     </p>
+
+    <p>
+        <a href="/register">Luo tunnus</a>
+    </p>
+
     {% endif %}
 
 </body>

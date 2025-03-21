@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Lisää kuva</title>
+</head>
+
+<body>
+  <form action="/create_image" method="post">
+    <p>
+      Otsikko: <br />
+      <input type="text" name="title" />
+    </p>
+    <p>
+      Kuvaus: <br />
+      <textarea name="description" rows="8", cols="40"></textarea>
+    </p>
+    <p>
+        <input type="radio" name="genre" value="Luonto" /> Luonto
+        <input type="radio" name="genre" value="Kaupunki" /> Kaupunki
+        <input type="radio" name="genre" value="Ihmiset" /> Ihmiset
+        <input type="radio" name="genre" value="Taide" /> Taide
+        <input type="radio" name="genre" value="Tapahtumat" /> Tapahtumat
+    </p>
+    <input type="submit" value="Lisää kuva" />
+  </form>
+</body>
+
+</html>
