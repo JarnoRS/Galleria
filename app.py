@@ -2,15 +2,23 @@ import sqlite3
 from flask import Flask
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import date
 import config
 import db
+import images
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_images = images.get_images()
+    return render_template("index.html", images=all_images)
+
+@app.route("/image/<int:image_id>")
+def show_image(image_id):
+    image = images.get_image(image_id)
+    return render_template("show_image.html", image=image)
 
 @app.route("/add_image")
 def add_image():
@@ -22,9 +30,9 @@ def create_image():
     kuvaus = request.form["description"]
     genre = request.form["genre"]
     user_id = session["user_id"]
+    date_added = date.today()
 
-    sql = "INSERT INTO images (title, kuvaus, genre, user_id) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [title, kuvaus, genre, user_id])
+    images.add_image(title, kuvaus, genre, user_id, date_added)
     return redirect("/")
 
 @app.route("/register")

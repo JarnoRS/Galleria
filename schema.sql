@@ -9,5 +9,6 @@ CREATE TABLE images (
     title TEXT,
     kuvaus TEXT,
     genre TEXT,
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
+    date_added TEXT
 );

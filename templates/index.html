@@ -37,6 +37,13 @@
 
     {% endif %}
 
+    <h2>Kuvia</h2>
+    <ul>
+    {% for image in images %}
+    <li><a href="/image/{{ image.id }}">{{ image.title }}</a></li>
+    {% endfor %}
+    </ul>
+
     </body>
 
 </html>
