@@ -7,6 +7,11 @@
 
 <body>
     <h1>{{ image.title }}</h1>
+    {% if session.user_id == image.user_id %}
+    <p> 
+        <a href="/edit_image/{{ image.id }}">Muokkaa</a>
+    </p>
+    {% endif %}
     <p>Kuvaus: {{ image.kuvaus }}</p>
     <p>Genre: {{ image.genre }}</p>
     <p>Käyttäjä: {{ image.username }}</p>

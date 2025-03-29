@@ -24,6 +24,21 @@ def show_image(image_id):
 def add_image():
     return render_template("add_image.html")
 
+@app.route("/edit_image/<int:image_id>")
+def edit_image(image_id):
+    image = images.get_image(image_id)
+    return render_template("edit_image.html", image=image)
+
+@app.route("/update_image", methods=["POST"])
+def update_image():
+    image_id = request.form["image_id"]
+    title = request.form["title"]
+    kuvaus = request.form["description"]
+    genre = request.form["genre"]
+
+    images.update_image(image_id, title, kuvaus, genre)
+    return redirect("/image/" + str(image_id))
+
 @app.route("/create_image", methods=["POST"])
 def create_image():
     title = request.form["title"]
