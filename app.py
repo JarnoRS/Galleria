@@ -39,6 +39,19 @@ def update_image():
     images.update_image(image_id, title, kuvaus, genre)
     return redirect("/image/" + str(image_id))
 
+@app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
+def delete_image(image_id):
+    if request.method == "GET":
+        image = images.get_image(image_id)
+        return render_template("delete_image.html", image=image)
+    
+    if request.method == "POST":
+        if "remove" in request.form:
+            images.delete_image(image_id)
+            return redirect("/")
+        else:
+            return redirect("/image/" + str(image_id))
+
 @app.route("/create_image", methods=["POST"])
 def create_image():
     title = request.form["title"]

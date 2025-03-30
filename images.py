@@ -2,6 +2,7 @@ import db
 
 def add_image(title, kuvaus, genre, user_id, date_added):
     sql = "INSERT INTO images (title, kuvaus, genre, user_id, date_added) VALUES (?, ?, ?, ?, ?)"
+    
     db.execute(sql, [title, kuvaus, genre, user_id, date_added])
 
 def get_images():
@@ -29,3 +30,8 @@ def update_image(image_id, title, kuvaus, genre):
                            WHERE id = ?"""
         
     db.execute(sql, [title, kuvaus, genre, image_id])
+
+def delete_image(image_id):
+    sql = "DELETE FROM images WHERE id = ?"
+        
+    db.execute(sql, [image_id])

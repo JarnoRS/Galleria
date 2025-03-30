@@ -10,6 +10,7 @@
     {% if session.user_id == image.user_id %}
     <p> 
         <a href="/edit_image/{{ image.id }}">Muokkaa</a>
+        <a href="/delete_image/{{ image.id }}">Poista kuva</a>
     </p>
     {% endif %}
     <p>Kuvaus: {{ image.kuvaus }}</p>
