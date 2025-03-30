@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 import config
@@ -27,6 +27,8 @@ def add_image():
 @app.route("/edit_image/<int:image_id>")
 def edit_image(image_id):
     image = images.get_image(image_id)
+    if image["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_image.html", image=image)
 
 @app.route("/update_image", methods=["POST"])
@@ -35,6 +37,9 @@ def update_image():
     title = request.form["title"]
     kuvaus = request.form["description"]
     genre = request.form["genre"]
+    image = images.get_image(image_id)
+    if image["user_id"] != session["user_id"]:
+        abort(403)
 
     images.update_image(image_id, title, kuvaus, genre)
     return redirect("/image/" + str(image_id))
@@ -43,6 +48,8 @@ def update_image():
 def delete_image(image_id):
     if request.method == "GET":
         image = images.get_image(image_id)
+        if image["user_id"] != session["user_id"]:
+            abort(403)
         return render_template("delete_image.html", image=image)
     
     if request.method == "POST":
