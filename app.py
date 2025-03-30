@@ -18,6 +18,8 @@ def index():
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
     image = images.get_image(image_id)
+    if not image:
+        abort(404)
     return render_template("show_image.html", image=image)
 
 @app.route("/add_image")
@@ -27,6 +29,8 @@ def add_image():
 @app.route("/edit_image/<int:image_id>")
 def edit_image(image_id):
     image = images.get_image(image_id)
+    if not image:
+        abort(404)
     if image["user_id"] != session["user_id"]:
         abort(403)
     return render_template("edit_image.html", image=image)
@@ -38,6 +42,8 @@ def update_image():
     kuvaus = request.form["description"]
     genre = request.form["genre"]
     image = images.get_image(image_id)
+    if not image:
+        abort(404)
     if image["user_id"] != session["user_id"]:
         abort(403)
 
@@ -46,10 +52,13 @@ def update_image():
 
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
 def delete_image(image_id):
+    image = images.get_image(image_id)
+    if not image:
+        abort(404)
+    if image["user_id"] != session["user_id"]:
+        abort(403)
+        
     if request.method == "GET":
-        image = images.get_image(image_id)
-        if image["user_id"] != session["user_id"]:
-            abort(403)
         return render_template("delete_image.html", image=image)
     
     if request.method == "POST":
