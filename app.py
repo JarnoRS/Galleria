@@ -52,6 +52,21 @@ def delete_image(image_id):
         else:
             return redirect("/image/" + str(image_id))
 
+@app.route("/find_image")
+def find_image():
+    query = request.args.get("query")
+    genre_query = request.args.getlist("genre")
+    if query and not genre_query:
+        results = images.find_images(query, None)
+    elif genre_query and not query:
+        results = images.find_images(None, genre_query)
+    elif query and genre_query:
+        results = images.find_images(query, genre_query)
+    else:
+        query = ""
+        results= []
+    return render_template("find_image.html", query=query, genre_query=genre_query,results=results)
+
 @app.route("/create_image", methods=["POST"])
 def create_image():
     title = request.form["title"]
