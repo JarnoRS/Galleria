@@ -1,6 +1,6 @@
 # Galleria
 
-TEHTY: 
+* TEHTY: 
     * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 
     * Käyttäjä pystyy lisäämään sovellukseen tietokohteita. Lisäksi käyttäjä pystyy muokkaamaan ja poistamaan lisäämiään kuvia.
