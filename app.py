@@ -10,6 +10,10 @@ import images
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_images = images.get_images()
@@ -24,10 +28,12 @@ def show_image(image_id):
 
 @app.route("/add_image")
 def add_image():
+    require_login()
     return render_template("add_image.html")
 
 @app.route("/edit_image/<int:image_id>")
 def edit_image(image_id):
+    require_login()
     image = images.get_image(image_id)
     if not image:
         abort(404)
@@ -37,6 +43,7 @@ def edit_image(image_id):
 
 @app.route("/update_image", methods=["POST"])
 def update_image():
+    require_login()
     image_id = request.form["image_id"]
     title = request.form["title"]
     kuvaus = request.form["description"]
@@ -52,12 +59,13 @@ def update_image():
 
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
 def delete_image(image_id):
+    require_login()
     image = images.get_image(image_id)
     if not image:
         abort(404)
     if image["user_id"] != session["user_id"]:
         abort(403)
-        
+
     if request.method == "GET":
         return render_template("delete_image.html", image=image)
     
@@ -85,6 +93,7 @@ def find_image():
 
 @app.route("/create_image", methods=["POST"])
 def create_image():
+    require_login()
     title = request.form["title"]
     kuvaus = request.form["description"]
     genre = request.form["genre"]
@@ -138,6 +147,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")
