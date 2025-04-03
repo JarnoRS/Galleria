@@ -95,7 +95,11 @@ def find_image():
 def create_image():
     require_login()
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     kuvaus = request.form["description"]
+    if len(kuvaus) > 1000:
+        abort(403)
     genre = request.form["genre"]
     user_id = session["user_id"]
     date_added = date.today()
