@@ -46,7 +46,11 @@ def update_image():
     require_login()
     image_id = request.form["image_id"]
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     kuvaus = request.form["description"]
+    if len(kuvaus) > 1000:
+        abort(403)
     genre = request.form["genre"]
     image = images.get_image(image_id)
     if not image:

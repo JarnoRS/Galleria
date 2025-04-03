@@ -9,11 +9,11 @@
   <form action="/update_image" method="post">
     <p>
       Otsikko: <br />
-      <input type="text" name="title" value="{{ image.title }}"/>
+      <input type="text" name="title" value="{{ image.title }}" maxlength="50" required/>
     </p>
     <p>
       Kuvaus: <br />
-      <textarea name="description" rows="8", cols="40">{{ image.kuvaus }}</textarea>
+      <textarea name="description" rows="8", cols="40" maxlength="1000">{{ image.kuvaus }}</textarea>
     </p>
     <p>
         <p>Valitut genret: {{ image.genre }}</p>
