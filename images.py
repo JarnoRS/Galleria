@@ -65,3 +65,20 @@ def find_images(query, genre_query):
         return db.query(sql, [like, like] + genre_query)
     
     return []
+
+def add_comment(image_id, comment, user_id, date_added):
+    sql = "INSERT INTO comments (image_id, comment, user_id, date_added) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [image_id, comment, user_id, date_added])
+
+def get_comments(image_id):
+    sql = """SELECT comments.comment,
+                    comments.date_added,
+                    users.username
+             FROM   comments
+             JOIN   users ON comments.user_id = users.id
+             WHERE  comments.image_id = ?
+             ORDER BY comments.date_added DESC"""
+    result = db.query(sql, [image_id])
+    return result if result else None
+
+

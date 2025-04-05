@@ -17,6 +17,23 @@
     <p>Genre: {{ image.genre }}</p>
     <p>Käyttäjä: {{ image.username }}</p>
     <p>Lisätty: {{ image.date_added }}</p>
+    {% if session.user_id %}
+    <form action="/add_comment/{{ image.id }}" method="post">
+        <input type="hidden" name="image_id" value="{{ image.id }}" />
+        <input type="text" name="comment" maxlength="100"/>
+        <input type="submit" value="Kommentoi" />
+    </form>
+    {% endif %}
+
+    {% if comments %}
+    <h2>Kommentit</h2>
+    <ul>
+        {% for comment in comments %}
+        <p>{{ comment.username}} {{ comment.date_added }} {{ comment.comment }}</p>>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <p>
         <a href="/">Takaisin</a>
     </p>

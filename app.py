@@ -19,12 +19,28 @@ def index():
     all_images = images.get_images()
     return render_template("index.html", images=all_images)
 
-@app.route("/image/<int:image_id>")
+@app.route("/image/<int:image_id>", methods=["GET", "POST"])
 def show_image(image_id):
+    image = images.get_image(image_id)
+    comments = images.get_comments(image_id)
+    if not image:
+        abort(404)
+    return render_template("show_image.html", image=image, comments=comments)
+
+@app.route("/add_comment/<int:image_id>", methods=["POST"])
+def add_comment(image_id):
+    require_login()
     image = images.get_image(image_id)
     if not image:
         abort(404)
-    return render_template("show_image.html", image=image)
+    if "user_id" in session:
+        image_id = request.form["image_id"]
+        comment = request.form["comment"]
+        user_id = session["user_id"]
+        date_added = date.today()
+        images.add_comment(image_id, comment, user_id, date_added)
+    comments = images.get_comments(image_id)
+    return render_template("show_image.html", image=image, comments=comments)
 
 @app.route("/add_image")
 def add_image():
