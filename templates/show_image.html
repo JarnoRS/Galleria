@@ -15,7 +15,7 @@
     {% endif %}
     <p>Kuvaus: {{ image.kuvaus }}</p>
     <p>Genre: {{ image.genre }}</p>
-    <p>Käyttäjä: {{ image.username }}</p>
+    <p>Käyttäjä: <a href="/user/{{ image.user_id }}">{{ image.username }}</a></p>
     <p>Lisätty: {{ image.date_added }}</p>
     {% if session.user_id %}
     <form action="/add_comment/{{ image.id }}" method="post">

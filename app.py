@@ -6,6 +6,7 @@ from datetime import date
 import config
 import db
 import images
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -18,6 +19,14 @@ def require_login():
 def index():
     all_images = images.get_images()
     return render_template("index.html", images=all_images)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    images = users.get_users_images(user_id)
+    return render_template("show_user.html", user=user, images=images)
 
 @app.route("/image/<int:image_id>", methods=["GET", "POST"])
 def show_image(image_id):
@@ -136,13 +145,14 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+    kuvaus = request.form["kuvaus"]
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"
     password_hash = generate_password_hash(password1)
 
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        sql = "INSERT INTO users (username, password_hash, kuvaus) VALUES (?, ?, ?)"
+        db.execute(sql, [username, password_hash, kuvaus])
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
