@@ -21,3 +21,10 @@ CREATE TABLE comments (
     user_id INTEGER REFERENCES users
     date_added TEXT
 );
+
+CREATE TABLE grades (
+    id INTEGER PRIMARY KEY,
+    image_id INTEGER,
+    grade INTEGER,
+    user_id INTEGER REFERENCES users
+);

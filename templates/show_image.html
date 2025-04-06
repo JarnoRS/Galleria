@@ -17,12 +17,37 @@
     <p>Genre: {{ image.genre }}</p>
     <p>Käyttäjä: <a href="/user/{{ image.user_id }}">{{ image.username }}</a></p>
     <p>Lisätty: {{ image.date_added }}</p>
+
     {% if session.user_id %}
+
+    {% if session.user_id != image.user_id %}
+    <p>
+        Arvostele kuva: <br />
+    <form action="/add_grade/{{ image.id }}" method="post">
+        <select name="grade">
+            <option value="">(valitse)</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <input type="submit" value="Lähetä arvosana" />
+    </form>
+    </p>
+    {% endif %}
+
     <form action="/add_comment/{{ image.id }}" method="post">
         <input type="hidden" name="image_id" value="{{ image.id }}" />
         <input type="text" name="comment" maxlength="100"/>
         <input type="submit" value="Kommentoi" />
     </form>
+    {% endif %}
+
+    
+    {% if grade_mean %}
+    <h2>Kuvan arvosana:</h2>
+        <p>{{ grade_mean }}</p>
     {% endif %}
 
     {% if comments %}

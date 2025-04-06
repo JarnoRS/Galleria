@@ -81,4 +81,14 @@ def get_comments(image_id):
     result = db.query(sql, [image_id])
     return result if result else None
 
+def add_grade(image_id, user_id, grade):
+    grade = int(grade)
+    sql = "INSERT INTO grades (image_id, user_id, grade) VALUES (?, ?, ?)"
+    db.execute(sql, [image_id, user_id, grade])
 
+def get_grades(image_id):
+    sql = """SELECT AVG(grades.grade) AS mean
+             FROM   grades
+             WHERE  grades.image_id = ?"""
+    result = db.query(sql, [image_id])[0]["mean"]
+    return round(result, 2) if result else None

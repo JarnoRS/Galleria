@@ -32,9 +32,10 @@ def show_user(user_id):
 def show_image(image_id):
     image = images.get_image(image_id)
     comments = images.get_comments(image_id)
+    grade_mean = images.get_grades(image_id)
     if not image:
         abort(404)
-    return render_template("show_image.html", image=image, comments=comments)
+    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
 
 @app.route("/add_comment/<int:image_id>", methods=["POST"])
 def add_comment(image_id):
@@ -49,7 +50,23 @@ def add_comment(image_id):
         date_added = date.today()
         images.add_comment(image_id, comment, user_id, date_added)
     comments = images.get_comments(image_id)
-    return render_template("show_image.html", image=image, comments=comments)
+    grade_mean = images.get_grades(image_id)
+    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
+
+@app.route("/add_grade/<int:image_id>", methods=["POST"])
+def add_grade(image_id):
+    require_login()
+    image = images.get_image(image_id)
+    if not image:
+        abort(404)
+    if "user_id" in session:
+        image_id = image["id"]
+        grade = request.form["grade"]
+        user_id = session["user_id"]
+        images.add_grade(image_id, user_id, grade)
+    comments = images.get_comments(image_id)
+    grade_mean = images.get_grades(image_id)
+    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
 
 @app.route("/add_image")
 def add_image():
