@@ -12,6 +12,19 @@ def get_users_images(user_id):
 
     return db.query(sql, [user_id])
 
+def get_user_comments(user_id):
+    sql = """SELECT comments.comment,
+                    comments.date_added,
+                    users.username,
+                    comments.image_id,
+                    comments.image_title
+             FROM   comments
+             JOIN   users ON comments.user_id = users.id
+             WHERE  comments.user_id = ?
+             ORDER BY comments.date_added DESC"""
+    result = db.query(sql, [user_id])
+    return result if result else None
+
 def create_user(username, password, kuvaus):
     password_hash = generate_password_hash(password)
     sql = "INSERT INTO users (username, password_hash, kuvaus) VALUES (?, ?, ?)"

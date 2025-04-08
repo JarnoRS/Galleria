@@ -24,6 +24,16 @@
     {% endfor %}
     </ul>
 
+    <h2>Käyttäjän viimeisimmät kommentit:</h2>
+    {% if comments %}
+    <ul>
+        {% for comment in comments %}
+        <a href="/image/{{ comment.image_id }}">{{ comment.image_title }}</a>
+        <p>{{ comment.username}} {{ comment.date_added }} {{ comment.comment }}</p>>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
 </body>
 
 </html>

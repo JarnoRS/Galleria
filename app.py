@@ -26,7 +26,8 @@ def show_user(user_id):
     if not user:
         abort(404)
     images = users.get_users_images(user_id)
-    return render_template("show_user.html", user=user, images=images)
+    comments = users.get_user_comments(user_id)[:3]
+    return render_template("show_user.html", user=user, images=images, comments=comments)
 
 @app.route("/image/<int:image_id>", methods=["GET", "POST"])
 def show_image(image_id):
@@ -48,7 +49,8 @@ def add_comment(image_id):
         comment = request.form["comment"]
         user_id = session["user_id"]
         date_added = date.today()
-        images.add_comment(image_id, comment, user_id, date_added)
+        image_title = image["title"]
+        images.add_comment(image_id, comment, user_id, date_added, image_title)
     comments = images.get_comments(image_id)
     grade_mean = images.get_grades(image_id)
     return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
@@ -63,7 +65,8 @@ def add_grade(image_id):
         image_id = image["id"]
         grade = request.form["grade"]
         user_id = session["user_id"]
-        images.add_grade(image_id, user_id, grade)
+        if grade:
+            images.add_grade(image_id, user_id, grade)
     comments = images.get_comments(image_id)
     grade_mean = images.get_grades(image_id)
     return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)

@@ -13,13 +13,19 @@
 
     * Käyttäjä pystyy valitsemaan kuvalle yhden tai useamman luokittelun (Esim. kuvan tyyli, käyttäjän lisäämä kuvaus, muiden käyttäjien antamat kommentit/arvostelut). Mahdolliset luokat ovat tietokannassa.
 
-* TO DO: 
     * Käyttäjä pystyy antamaan kuvalle arvosanan (esim. 1-5). Kuvan saama keskiarvo esitetään kuvan yhteydessä.
-        -> Toteutetaan lisäämällä kuvatiedostojen tietoja käsittelevään SQL-tauluun sarake, jonka avulla keskiarvo lasketaan
+        -> Toteutettu luomalla tietokantaan "grades"-taulu, johon käyttäjä voi antaa arvosanan kerran jokaiselle kuvalle. Arvosanaa voi muuttaa myöhemmin.
+
+    * Kuviin liittyvä kommentointikenttä
+        -> Toteutettu luomalla tietokantaan "comments"-taulu, josta kommentit haetaan katsottaessa kuvaa.
+
+    * Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät kuvat.
+        -> Luotu suppea käyttäjäsivu.
+        
+* TO DO: 
 
     * Sovelluksessa on pääasiallisen tietokohteen lisäksi toissijainen tietokohde, joka täydentää pääasiallista tietokohdetta. Käyttäjä pystyy lisäämään toissijaisia tietokohteita omiin ja muiden käyttäjien tietokohteisiin liittyen.
         -> Nyt on tehtynä toissijainen tietokohde (SQL-tietokanta kuvaan liittyen) ja pitäisi lisätä ensisijainen tietokohde, eli kuvatiedostot.
 
-    * Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät kuvat.
 
-    * Kuviin liittyvä kommentointikenttä
+

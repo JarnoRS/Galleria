@@ -66,9 +66,9 @@ def find_images(query, genre_query):
     
     return []
 
-def add_comment(image_id, comment, user_id, date_added):
-    sql = "INSERT INTO comments (image_id, comment, user_id, date_added) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [image_id, comment, user_id, date_added])
+def add_comment(image_id, comment, user_id, date_added, image_title):
+    sql = "INSERT INTO comments (image_id, comment, user_id, date_added, image_title) VALUES (?, ?, ?, ?, ?)"
+    db.execute(sql, [image_id, comment, user_id, date_added, image_title])
 
 def get_comments(image_id):
     sql = """SELECT comments.comment,
@@ -83,6 +83,11 @@ def get_comments(image_id):
 
 def add_grade(image_id, user_id, grade):
     grade = int(grade)
+    sql = "SELECT image_id, user_id FROM grades WHERE image_id = ? AND user_id = ?"
+    result = db.query(sql, [image_id, user_id])
+    if result:
+        sql = "DELETE FROM grades WHERE image_id = ? AND user_id = ?;"
+        db.execute(sql, [image_id, user_id])
     sql = "INSERT INTO grades (image_id, user_id, grade) VALUES (?, ?, ?)"
     db.execute(sql, [image_id, user_id, grade])
 

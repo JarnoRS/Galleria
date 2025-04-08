@@ -19,7 +19,8 @@ CREATE TABLE comments (
     image_id INTEGER,
     comment TEXT
     user_id INTEGER REFERENCES users
-    date_added TEXT
+    date_added TEXT,
+    image_title TEXT
 );
 
 CREATE TABLE grades (
