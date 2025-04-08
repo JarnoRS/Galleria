@@ -74,17 +74,19 @@ def add_grade(image_id):
 @app.route("/add_image")
 def add_image():
     require_login()
-    return render_template("add_image.html")
+    classes = images.get_classes()
+    return render_template("add_image.html", classes=classes)
 
 @app.route("/edit_image/<int:image_id>")
 def edit_image(image_id):
     require_login()
+    classes = images.get_classes()
     image = images.get_image(image_id)
     if not image:
         abort(404)
     if image["user_id"] != session["user_id"]:
         abort(403)
-    return render_template("edit_image.html", image=image)
+    return render_template("edit_image.html", image=image, classes=classes)
 
 @app.route("/update_image", methods=["POST"])
 def update_image():

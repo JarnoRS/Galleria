@@ -97,3 +97,13 @@ def get_grades(image_id):
              WHERE  grades.image_id = ?"""
     result = db.query(sql, [image_id])[0]["mean"]
     return round(result, 2) if result else None
+
+def get_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+    return classes
