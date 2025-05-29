@@ -1,6 +1,6 @@
 # Galleria
 
-Sovellus on samassa tilassa, mihin se jäi ennen edellisen toteutuksen aikana (periodi 4)
+Sovellus on samassa tilassa, mihin se jäi ennen edellisen toteutuksen aikana (periodi 4). Tarkoituksena jatkaa välipalautus 2:n jälkeen siitä, mihin se viime suorituskerralla jäi.
 
 * TEHTY: 
     * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
