@@ -174,7 +174,7 @@ def create():
         users.create_user(username, password1, kuvaus)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
-    return "Tunnus luotu"
+    return render_template("user_created.html", username=username)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
