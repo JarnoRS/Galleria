@@ -29,5 +29,7 @@ Sovellus on samassa tilassa, mihin se jäi ennen edellisen toteutuksen aikana (p
     * Sovelluksessa on pääasiallisen tietokohteen lisäksi toissijainen tietokohde, joka täydentää pääasiallista tietokohdetta. Käyttäjä pystyy lisäämään toissijaisia tietokohteita omiin ja muiden käyttäjien tietokohteisiin liittyen.
         -> Nyt on tehtynä toissijainen tietokohde (SQL-tietokanta kuvaan liittyen) ja pitäisi lisätä ensisijainen tietokohde, eli kuvatiedostot.
 
-
-
+VÄLIPALAUTUS 2 FEEDBACK:
+ -Funktio get_classes muutettu käymään sanakirja läpi yhdellä iteraatiolla
+ -Korjattu schema-tiedostoon puuttuvat pilkut
+ -Korjattu bugi, jossa kuvan poistaminen ei poista kuvaan liittyviä kommentteja.

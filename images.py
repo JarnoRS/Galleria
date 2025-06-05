@@ -106,7 +106,7 @@ def get_classes():
     result = db.query(sql)
     classes = {}
     for title, value in result:
-        classes[title] = []
-    for title, value in result:
+        if title not in classes:
+            classes[title] = []
         classes[title].append(value)
     return classes
