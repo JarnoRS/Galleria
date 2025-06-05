@@ -37,6 +37,9 @@ def delete_image(image_id):
         
     db.execute(sql, [image_id])
 
+    sql = "DELETE FROM comments WHERE image_id = ?"
+    db.execute(sql, [image_id])
+
 def find_images(query, genre_query):
     if query and not genre_query:
         sql = """SELECT id, title
