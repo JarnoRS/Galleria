@@ -99,6 +99,9 @@ def update_image():
     if len(kuvaus) > 1000:
         abort(403)
     genre = request.form["genre"]
+    classes = images.get_classes()
+    if genre not in classes["genre"]:
+        abort(403)
     image = images.get_image(image_id)
     if not image:
         abort(404)
@@ -152,6 +155,9 @@ def create_image():
     if len(kuvaus) > 1000:
         abort(403)
     genre = request.form["genre"]
+    classes = images.get_classes()
+    if genre not in classes["genre"]:
+        abort(403)
     user_id = session["user_id"]
     date_added = date.today()
 

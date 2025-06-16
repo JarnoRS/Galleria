@@ -33,3 +33,4 @@ VÄLIPALAUTUS 2 FEEDBACK:
  -Funktio get_classes muutettu käymään sanakirja läpi yhdellä iteraatiolla
  -Korjattu schema-tiedostoon puuttuvat pilkut
  -Korjattu bugi, jossa kuvan poistaminen ei poista kuvaan liittyviä kommentteja.
+ -Lisätty sivu, joka vahvistaa käyttäjän luomisen ja ohjaa takaisin etusivulle.
