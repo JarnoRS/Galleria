@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask
 from flask import abort, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import date
+from datetime import datetime, date
 import config
 import db
 import images
@@ -48,12 +48,12 @@ def add_comment(image_id):
         image_id = request.form["image_id"]
         comment = request.form["comment"]
         user_id = session["user_id"]
-        date_added = date.today()
+        date_added = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         image_title = image["title"]
         images.add_comment(image_id, comment, user_id, date_added, image_title)
     comments = images.get_comments(image_id)
     grade_mean = images.get_grades(image_id)
-    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
+    return redirect("/image/" + str(image_id))
 
 @app.route("/add_grade/<int:image_id>", methods=["POST"])
 def add_grade(image_id):
@@ -69,7 +69,7 @@ def add_grade(image_id):
             images.add_grade(image_id, user_id, grade)
     comments = images.get_comments(image_id)
     grade_mean = images.get_grades(image_id)
-    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
+    return redirect("/image/" + str(image_id))
 
 @app.route("/add_image")
 def add_image():
