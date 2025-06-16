@@ -54,7 +54,7 @@
     <h2>Kommentit</h2>
     <ul>
         {% for comment in comments %}
-        <p>{{ comment.username}} {{ comment.date_added }} {{ comment.comment }}</p>>
+        <li><a href="/user/{{ comment.user_id }}">{{ comment.username}}</a> {{ comment.date_added }} {{ comment.comment }}</li>>
         {% endfor %}
     </ul>
     {% endif %}

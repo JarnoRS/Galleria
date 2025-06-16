@@ -76,6 +76,7 @@ def add_comment(image_id, comment, user_id, date_added, image_title):
 def get_comments(image_id):
     sql = """SELECT comments.comment,
                     comments.date_added,
+                    comments.user_id,
                     users.username
              FROM   comments
              JOIN   users ON comments.user_id = users.id
