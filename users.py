@@ -42,9 +42,9 @@ def check_login(username, password):
     else:
         return None
     
-def update_profile_pic(user_id, image):
-    sql = "UPDATE users SET profile_pic = ? WHERE id = ?"
-    db.execute(sql, [image, user_id])
+def update_profile(user_id, image, kuvaus):
+    sql = "UPDATE users SET profile_pic = ?, kuvaus = ? WHERE id = ?"
+    db.execute(sql, [image, kuvaus, user_id])
 
 def get_profile_pic(user_id):
     sql = "SELECT profile_pic FROM users WHERE id = ?"

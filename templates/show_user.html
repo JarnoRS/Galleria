@@ -6,6 +6,11 @@
 </head>
 
 <body>
+    {% if session.user_id == user.id %}
+    <p> 
+        <a href="/edit_user/{{ user.id }}">Muokkaa</a>
+    </p>
+    {% endif %}
     <h1>{{ user.username }}</h1>
     <img src="/profile_pic/{{ user.id }}"/>
     <h2>{{ user.kuvaus }}</h2>
@@ -33,7 +38,9 @@
         {% endfor %}
     </ul>
     {% endif %}
-
+    <p>
+      <a href="/">Takaisin</a>
+    </p>
 </body>
 
 </html>

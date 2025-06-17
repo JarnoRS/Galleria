@@ -1,0 +1,14 @@
+<form action="/update_user" method="post" enctype="multipart/form-data">
+    <p>
+      Kuva: <input type="file" name="image" accept=".jpg" />
+    </p>
+    <p>
+      Kuvaus:
+      <input type="text" name="kuvaus" maxlength="200"/>
+    </p>
+    <input type="hidden" name="user_id" value="{{ user.id }}" />
+    <input type="submit" value="Lähetä" />
+    <p>
+      <a href="/user/{{ user.id }}">Takaisin</a>
+    </p>
+  </form>
