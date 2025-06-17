@@ -174,6 +174,8 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     kuvaus = request.form["kuvaus"]
+    if len(password1) < 5:
+        return "VIRHE: Salasanan pituuden tulee olla vähintään 5 merkkiä."
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"  
     try:
