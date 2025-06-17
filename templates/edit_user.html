@@ -4,7 +4,7 @@
     </p>
     <p>
       Kuvaus:
-      <input type="text" name="kuvaus" maxlength="200"/>
+      <textarea name="kuvaus" rows="8", cols="40" maxlength="1000">{{ user.kuvaus }}</textarea>
     </p>
     <input type="hidden" name="user_id" value="{{ user.id }}" />
     <input type="submit" value="Lähetä" />

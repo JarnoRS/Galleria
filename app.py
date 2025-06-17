@@ -228,17 +228,21 @@ def update_user():
     require_login()
     user_id = request.form["user_id"]
     file = request.files["image"]
-    if not file.filename.endswith(".jpg"):
-        return "VIRHE: väärä tiedostomuoto"
-    image = file.read()
-    if len(image) > 100 * 1024:
-        return "VIRHE: liian suuri kuva"
-    user_id = session["user_id"]
     kuvaus = request.form["kuvaus"]
-    if user_id != session["user_id"]:
-        abort(403)
-    users.update_profile(user_id, image, kuvaus)
-    return redirect("/user/" + str(user_id))
+    if file:
+        if not file.filename.endswith(".jpg"):
+            return "VIRHE: väärä tiedostomuoto"
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return "VIRHE: liian suuri kuva"
+        user_id = session["user_id"]
+        if user_id != session["user_id"]:
+            abort(403)
+        users.update_profile(user_id, image, kuvaus)
+        return redirect("/user/" + str(user_id))
+    else:
+        users.update_profile(user_id, None, kuvaus)
+        return redirect("/user/" + str(user_id))
 
 @app.route("/profile_pic/<int:user_id>")
 def show_profile_pic(user_id):
