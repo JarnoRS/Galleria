@@ -6,10 +6,13 @@
 </head>
 
 <body>
-  <form action="/create_image" method="post">
+  <form action="/create_image" method="post" enctype="multipart/form-data">
     <p>
       Otsikko: <br />
       <input type="text" name="title" maxlength="50" required/>
+    </p>
+    <p>
+      Lataa kuva: <input type="file" name="profile_pic" accept=".jpg" />
     </p>
     <p>
       Kuvaus: <br />

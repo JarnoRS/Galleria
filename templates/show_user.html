@@ -25,7 +25,11 @@
     <h3>Käyttäjän kuvia</h3>
     <ul>
     {% for image in images %}
-    <li><a href="/image/{{ image.id }}">{{ image.title }}</a></li>
+    <li>
+        <a href="/image/{{ image.id }}">
+          <img src="/picture/{{ image.id }}" width="150" height="150"/> 
+        </a>
+    </li>
     {% endfor %}
     </ul>
 

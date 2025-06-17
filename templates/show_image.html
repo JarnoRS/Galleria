@@ -6,6 +6,7 @@
 </head>
 
 <body>
+    <img src="/picture/{{ image.id }}" width="150" height="150"/>
     <h1>{{ image.title }}</h1>
     {% if session.user_id == image.user_id %}
     <p> 

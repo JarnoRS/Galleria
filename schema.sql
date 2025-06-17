@@ -9,7 +9,7 @@ CREATE TABLE users (
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT,
     kuvaus TEXT,
-    image BLOB
+    profile_pic BLOB
 );
 
 CREATE TABLE images (
@@ -18,7 +18,8 @@ CREATE TABLE images (
     kuvaus TEXT,
     genre TEXT,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    date_added TEXT
+    date_added TEXT,
+    image MEDIUMBLOB
 );
 
 CREATE TABLE comments (

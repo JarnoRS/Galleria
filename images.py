@@ -1,9 +1,9 @@
 import db
 
-def add_image(title, kuvaus, genre, user_id, date_added):
-    sql = "INSERT INTO images (title, kuvaus, genre, user_id, date_added) VALUES (?, ?, ?, ?, ?)"
+def add_image(title, kuvaus, genre, user_id, date_added, image):
+    sql = "INSERT INTO images (title, kuvaus, genre, user_id, date_added, image) VALUES (?, ?, ?, ?, ?, ?)"
 
-    db.execute(sql, [title, kuvaus, genre, user_id, date_added])
+    db.execute(sql, [title, kuvaus, genre, user_id, date_added, image])
 
 def get_images():
     sql = "SELECT id, title FROM images ORDER BY id DESC"
@@ -112,6 +112,7 @@ def get_classes():
         classes[title].append(value)
     return classes
 
-def update_profile_pic(user_id, image):
-    sql = "UPDATE users SET profile_pic = ? WHERE id = ?"
-    db.execute(sql, [image, user_id])
+def get_picture(image_id):
+    sql = "SELECT image FROM images WHERE id = ?"
+    result = db.query(sql, [image_id])
+    return result[0][0] if result else None

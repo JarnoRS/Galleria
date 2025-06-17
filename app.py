@@ -158,10 +158,15 @@ def create_image():
     classes = images.get_classes()
     if genre not in classes["genre"]:
         abort(403)
+    file = request.files["profile_pic"]
+    if not file.filename.endswith(".jpg"):
+        return "VIRHE: väärä tiedostomuoto"
+    image = file.read()
+    if len(image) > 1000 * 1024:
+        return "VIRHE: liian suuri kuva"
     user_id = session["user_id"]
     date_added = date.today()
-
-    images.add_image(title, kuvaus, genre, user_id, date_added)
+    images.add_image(title, kuvaus, genre, user_id, date_added, image)
     return redirect("/")
 
 @app.route("/register")
@@ -247,6 +252,15 @@ def update_user():
 @app.route("/profile_pic/<int:user_id>")
 def show_profile_pic(user_id):
     image = users.get_profile_pic(user_id)
+    if not image:
+        abort(404)
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response
+
+@app.route("/picture/<int:image_id>")
+def show_picture(image_id):
+    image = images.get_picture(image_id)
     if not image:
         abort(404)
     response = make_response(bytes(image))
