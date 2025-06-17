@@ -12,7 +12,7 @@
     </p>
     {% endif %}
     <h1>{{ user.username }}</h1>
-    <img src="/profile_pic/{{ user.id }}"/>
+    <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän profiilikuva" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
     <h2>{{ user.kuvaus }}</h2>
 
     {% if images | count > 1 %}

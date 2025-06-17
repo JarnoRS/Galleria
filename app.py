@@ -26,7 +26,8 @@ def show_user(user_id):
     if not user:
         abort(404)
     images = users.get_users_images(user_id)
-    comments = users.get_user_comments(user_id)[:3]
+    comments = users.get_user_comments(user_id) or []
+    comments = comments[:3]
     return render_template("show_user.html", user=user, images=images, comments=comments)
 
 @app.route("/image/<int:image_id>", methods=["GET", "POST"])
@@ -179,12 +180,14 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     kuvaus = request.form["kuvaus"]
+    profile_pic = None
     file = request.files["profile_pic"]
-    if not file.filename.endswith(".jpg"):
-        return "VIRHE: väärä tiedostomuoto"
-    profile_pic = file.read()
-    if len(profile_pic) > 100 * 1024:
-        return "VIRHE: liian suuri kuva"
+    if file and file.filename:
+        if not file.filename.endswith(".jpg"):
+            return "VIRHE: väärä tiedostomuoto"
+        profile_pic = file.read()
+        if len(profile_pic) > 100 * 1024:
+            return "VIRHE: liian suuri kuva"
     if len(password1) < 5:
         return "VIRHE: Salasanan pituuden tulee olla vähintään 5 merkkiä."
     if password1 != password2:
