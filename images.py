@@ -111,3 +111,7 @@ def get_classes():
             classes[title] = []
         classes[title].append(value)
     return classes
+
+def update_profile_pic(user_id, image):
+    sql = "UPDATE users SET profile_pic = ? WHERE id = ?"
+    db.execute(sql, [image, user_id])

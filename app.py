@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session, make_response
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
 import config
@@ -174,12 +174,18 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     kuvaus = request.form["kuvaus"]
+    file = request.files["profile_pic"]
+    if not file.filename.endswith(".jpg"):
+        return "VIRHE: väärä tiedostomuoto"
+    profile_pic = file.read()
+    if len(profile_pic) > 100 * 1024:
+        return "VIRHE: liian suuri kuva"
     if len(password1) < 5:
         return "VIRHE: Salasanan pituuden tulee olla vähintään 5 merkkiä."
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"  
     try:
-        users.create_user(username, password1, kuvaus)
+        users.create_user(username, password1, kuvaus, profile_pic)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
     return render_template("user_created.html", username=username)
@@ -207,3 +213,30 @@ def logout():
         del session["user_id"]
         del session["username"]
     return redirect("/")
+
+@app.route("/update_profile_pic", methods=["GET", "POST"])
+def update_profile_pic():
+    require_login()
+    if request.method == "GET":
+        return render_template("update_profile_pic.html")
+    if request.method == "POST":
+        file = request.files["image"]
+        if not file.filename.endswith(".jpg"):
+            return "VIRHE: väärä tiedostomuoto"
+
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return "VIRHE: liian suuri kuva"
+
+        user_id = session["user_id"]
+        users.update_image(user_id, image)
+        return redirect("/user/" + str(user_id))
+
+@app.route("/profile_pic/<int:user_id>")
+def show_profile_pic(user_id):
+    image = users.get_profile_pic(user_id)
+    if not image:
+        abort(404)
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response

@@ -8,7 +8,8 @@ CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT,
-    kuvaus TEXT
+    kuvaus TEXT,
+    image BLOB
 );
 
 CREATE TABLE images (

@@ -25,10 +25,10 @@ def get_user_comments(user_id):
     result = db.query(sql, [user_id])
     return result if result else None
 
-def create_user(username, password, kuvaus):
+def create_user(username, password, kuvaus, profile_pic):
     password_hash = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password_hash, kuvaus) VALUES (?, ?, ?)"
-    db.execute(sql, [username, password_hash, kuvaus])
+    sql = "INSERT INTO users (username, password_hash, kuvaus, profile_pic) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [username, password_hash, kuvaus, profile_pic])
 
 def check_login(username, password):
     sql = "SELECT id, password_hash FROM users WHERE username = ?"
@@ -41,3 +41,12 @@ def check_login(username, password):
         return user_id
     else:
         return None
+    
+def update_profile_pic(user_id, image):
+    sql = "UPDATE users SET profile_pic = ? WHERE id = ?"
+    db.execute(sql, [image, user_id])
+
+def get_profile_pic(user_id):
+    sql = "SELECT profile_pic FROM users WHERE id = ?"
+    result = db.query(sql, [user_id])
+    return result[0][0] if result else None

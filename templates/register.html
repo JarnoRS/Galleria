@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  <form action="/create" method="post">
+  <form action="/create" method="post" enctype="multipart/form-data">
     <p>
       Tunnus: <br />
       <input type="text" name="username" />
@@ -19,10 +19,12 @@
       Salasana uudestaan: <br />
       <input type="password" name="password2" minlength="5" required/>
     </p>
-
+    <p>
+      Profiilikuva: <input type="file" name="profile_pic" accept=".jpg" />
+    </p>
     <p>
       Kuvaus:
-      <input type="text" name="kuvaus" maxlenght="200"/>
+      <input type="text" name="kuvaus" maxlength="200"/>
     </p>
     <input type="submit" value="Luo tunnus" />
   </form>
