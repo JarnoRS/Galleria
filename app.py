@@ -96,8 +96,8 @@ def update_image():
     title = request.form["title"]
     if not title or len(title) > 50:
         abort(403)
-    kuvaus = request.form["description"]
-    if len(kuvaus) > 1000:
+    image_description = request.form["description"]
+    if len(image_description) > 1000:
         abort(403)
     genre = request.form["genre"]
     classes = images.get_classes()
@@ -109,7 +109,7 @@ def update_image():
     if image["user_id"] != session["user_id"]:
         abort(403)
 
-    images.update_image(image_id, title, kuvaus, genre)
+    images.update_image(image_id, title, image_description, genre)
     return redirect("/image/" + str(image_id))
 
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
@@ -152,8 +152,8 @@ def create_image():
     title = request.form["title"]
     if not title or len(title) > 50:
         abort(403)
-    kuvaus = request.form["description"]
-    if len(kuvaus) > 1000:
+    image_description = request.form["description"]
+    if len(image_description) > 1000:
         abort(403)
     genre = request.form["genre"]
     classes = images.get_classes()
@@ -167,7 +167,7 @@ def create_image():
         return "VIRHE: liian suuri kuva"
     user_id = session["user_id"]
     date_added = date.today()
-    images.add_image(title, kuvaus, genre, user_id, date_added, image)
+    images.add_image(title, image_description, genre, user_id, date_added, image)
     return redirect("/")
 
 @app.route("/register")
@@ -179,7 +179,7 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
-    kuvaus = request.form["kuvaus"]
+    user_description = request.form["description"]
     profile_pic = None
     file = request.files["profile_pic"]
     if file and file.filename:
@@ -193,7 +193,7 @@ def create():
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"  
     try:
-        users.create_user(username, password1, kuvaus, profile_pic)
+        users.create_user(username, password1, user_description, profile_pic)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
     return render_template("user_created.html", username=username)
@@ -229,14 +229,12 @@ def edit_user(user_id):
     user = users.get_user(user_id)
     return render_template("edit_user.html", user=user)
 
-
-
 @app.route("/update_user", methods=["POST"])
 def update_user():
     require_login()
     user_id = request.form["user_id"]
     file = request.files["image"]
-    kuvaus = request.form["kuvaus"]
+    user_description = request.form["description"]
     if file:
         if not file.filename.endswith(".jpg"):
             return "VIRHE: väärä tiedostomuoto"
@@ -246,10 +244,10 @@ def update_user():
         user_id = session["user_id"]
         if user_id != session["user_id"]:
             abort(403)
-        users.update_profile(user_id, image, kuvaus)
+        users.update_profile(user_id, image, user_description)
         return redirect("/user/" + str(user_id))
     else:
-        users.update_profile(user_id, None, kuvaus)
+        users.update_profile(user_id, None, user_description)
         return redirect("/user/" + str(user_id))
 
 @app.route("/profile_pic/<int:user_id>")

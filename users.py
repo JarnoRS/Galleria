@@ -2,7 +2,7 @@ import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def get_user(user_id):
-    sql = "SELECT id, username, kuvaus FROM users WHERE id = ?"
+    sql = "SELECT id, username, user_description FROM users WHERE id = ?"
     
     result = db.query(sql, [user_id])
     return result[0] if result else None
@@ -25,10 +25,10 @@ def get_user_comments(user_id):
     result = db.query(sql, [user_id])
     return result if result else None
 
-def create_user(username, password, kuvaus, profile_pic):
+def create_user(username, password, user_description, profile_pic):
     password_hash = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password_hash, kuvaus, profile_pic) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [username, password_hash, kuvaus, profile_pic])
+    sql = "INSERT INTO users (username, password_hash, user_description, profile_pic) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [username, password_hash, user_description, profile_pic])
 
 def check_login(username, password):
     sql = "SELECT id, password_hash FROM users WHERE username = ?"
@@ -42,13 +42,13 @@ def check_login(username, password):
     else:
         return None
     
-def update_profile(user_id, image, kuvaus):
+def update_profile(user_id, image, user_description):
     if image == None:
-        sql = "UPDATE users SET kuvaus = ? WHERE id = ?"
-        db.execute(sql, [kuvaus, user_id])
+        sql = "UPDATE users SET user_description = ? WHERE id = ?"
+        db.execute(sql, [user_description, user_id])
     else:
-        sql = "UPDATE users SET profile_pic = ?, kuvaus = ? WHERE id = ?"
-        db.execute(sql, [image, kuvaus, user_id])
+        sql = "UPDATE users SET profile_pic = ?, user_description = ? WHERE id = ?"
+        db.execute(sql, [image, user_description, user_id])
 
 
 def get_profile_pic(user_id):

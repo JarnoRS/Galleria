@@ -8,14 +8,14 @@ CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT,
-    kuvaus TEXT,
+    user_description TEXT,
     profile_pic BLOB
 );
 
 CREATE TABLE images (
     id INTEGER PRIMARY KEY,
     title TEXT,
-    kuvaus TEXT,
+    image_description TEXT,
     genre TEXT,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     date_added TEXT,

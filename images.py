@@ -1,9 +1,9 @@
 import db
 
-def add_image(title, kuvaus, genre, user_id, date_added, image):
-    sql = "INSERT INTO images (title, kuvaus, genre, user_id, date_added, image) VALUES (?, ?, ?, ?, ?, ?)"
+def add_image(title, image_description, genre, user_id, date_added, image):
+    sql = "INSERT INTO images (title, image_description, genre, user_id, date_added, image) VALUES (?, ?, ?, ?, ?, ?)"
 
-    db.execute(sql, [title, kuvaus, genre, user_id, date_added, image])
+    db.execute(sql, [title, image_description, genre, user_id, date_added, image])
 
 def get_images():
     sql = "SELECT id, title FROM images ORDER BY id DESC"
@@ -13,7 +13,7 @@ def get_images():
 def get_image(image_id):
     sql = """SELECT images.id,
                     images.title,
-                    images.kuvaus,
+                    images.image_description,
                     images.genre,
                     images.date_added,
                     users.id user_id,
@@ -24,13 +24,13 @@ def get_image(image_id):
     result = db.query(sql, [image_id])
     return result[0] if result else None
 
-def update_image(image_id, title, kuvaus, genre):
+def update_image(image_id, title, image_description, genre):
     sql = """UPDATE images SET title = ?,
-                               kuvaus = ?,
+                               image_description = ?,
                                genre = ?
                            WHERE id = ?"""
         
-    db.execute(sql, [title, kuvaus, genre, image_id])
+    db.execute(sql, [title, image_description, genre, image_id])
 
 def delete_image(image_id):
     sql = "DELETE FROM images WHERE id = ?"
@@ -44,7 +44,7 @@ def find_images(query, genre_query):
     if query and not genre_query:
         sql = """SELECT id, title
                  FROM images
-                 WHERE title LIKE ? OR kuvaus LIKE ?
+                 WHERE title LIKE ? OR image_description LIKE ?
                  ORDER BY id DESC"""
         like = "%" + query + "%"
         return db.query(sql, [like, like])
@@ -60,7 +60,7 @@ def find_images(query, genre_query):
     elif query and genre_query:
         sql = """SELECT id, title
                  FROM images
-                 WHERE (title LIKE ? OR kuvaus LIKE ?)
+                 WHERE (title LIKE ? OR image_description LIKE ?)
                  AND genre IN ({})
                  ORDER BY id DESC""".format(','.join('?' for _ in genre_query))
         

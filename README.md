@@ -34,3 +34,13 @@ VÄLIPALAUTUS 2 FEEDBACK:
  -Korjattu schema-tiedostoon puuttuvat pilkut
  -Korjattu bugi, jossa kuvan poistaminen ei poista kuvaan liittyviä kommentteja.
  -Lisätty sivu, joka vahvistaa käyttäjän luomisen ja ohjaa takaisin etusivulle.
+
+ VÄLIPALAUTUS 3 FEEDBACK:
+ -Siistitty koodista pois suomenkieliset muuttujien nimet.
+
+KUINKA KÄYNNISTÄT SOVELLUKSEN (LINUX):
+1. Kopioi sovelluksen repositorio laitteellesi ja mene hakemiston juureen (/Galleria).
+2. Aja komento "source venv/bin/activate" käynnistääksesi Pythonin virtuaaliympäristön.
+3. Asenna flask komennolla "pip install flask".
+4. Valmistele tietokanta suorittamalla komennot "sqlite3 database.db < schema.sql" ja "sqlite3 database.db < init.sql".
+5. Aja komento "flask run" ja voit siirtyä sovelluksen etusivulle.
