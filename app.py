@@ -229,6 +229,25 @@ def edit_user(user_id):
     user = users.get_user(user_id)
     return render_template("edit_user.html", user=user)
 
+@app.route("/delete_user", methods=["GET", "POST"])
+def delete_user():
+    require_login()
+    user_id = session["user_id"]
+    user = users.get_user(user_id)
+    if request.method == "GET":
+        return render_template("delete_user.html", user=user)
+    if request.method == "POST":
+        username = user["username"]
+        password = request.form["password"] 
+        user_id = users.check_login(username, password)
+        if user_id:
+            del session["user_id"]
+            del session["username"]
+            users.delete(user_id)
+            return redirect("/")
+        else:
+            abort(403)
+
 @app.route("/update_user", methods=["POST"])
 def update_user():
     require_login()
@@ -249,6 +268,11 @@ def update_user():
     else:
         users.update_profile(user_id, None, user_description)
         return redirect("/user/" + str(user_id))
+
+@app.route("/all_users")
+def all_users():
+    users = users.get_every_user()
+    return render_template("every_user.html", users=users)
 
 @app.route("/profile_pic/<int:user_id>")
 def show_profile_pic(user_id):

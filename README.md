@@ -6,9 +6,8 @@ Sovellus on samassa tilassa, mihin se jäi ennen edellisen toteutuksen aikana (p
     * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 
     * Käyttäjä pystyy lisäämään sovellukseen tietokohteita. Lisäksi käyttäjä pystyy muokkaamaan ja poistamaan lisäämiään kuvia.
-        -> Kuviin liittyvät tiedot (otsikko, kuvaus yms.) tehty, tekemättä itse kuvatiedostojen lisäys
 
-    * Käyttäjä näkee sovellukseen lisätyt kuvat. Käyttäjä näkee sekä itse lisäämänsä että muiden käyttäjien lisäämät kuvat.
+    * Käyttäjä näkee sovellukseen lisätyt kuvat. Käyttäjä näkee sekä itse lisäämänsä, että muiden käyttäjien lisäämät kuvat.
 
     * Käyttäjä pystyy etsimään kuvia hakusanalla tai muulla perusteella. Käyttäjä pystyy hakemaan sekä itse lisäämiään että muiden käyttäjien lisäämiä kuvia.
         -> Kuvia voi hakea hakusanalla, genrellä tai molemmilla
@@ -23,11 +22,15 @@ Sovellus on samassa tilassa, mihin se jäi ennen edellisen toteutuksen aikana (p
 
     * Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät kuvat.
         -> Luotu suppea käyttäjäsivu.
-        
-* TO DO: 
+    
+    * Sovellukseen voi lisätä kuvia
+        -> Toteutettu luomalla tietokannan "images"-tauluun sarake, jonne kuva tallennetaan MEDIUMBLOB-tietotyyppinä.
 
     * Sovelluksessa on pääasiallisen tietokohteen lisäksi toissijainen tietokohde, joka täydentää pääasiallista tietokohdetta. Käyttäjä pystyy lisäämään toissijaisia tietokohteita omiin ja muiden käyttäjien tietokohteisiin liittyen.
-        -> Nyt on tehtynä toissijainen tietokohde (SQL-tietokanta kuvaan liittyen) ja pitäisi lisätä ensisijainen tietokohde, eli kuvatiedostot.
+        -> Ensisijainen tietokohde on käyttäjien lisäämät kuvan ja toissijainen tietokohde näihin kuviin lähetetyt kommentit.
+
+* TO DO:
+    * Tietokohteiden poistamiseen liittyen täytyy tehdä parannuksia. Tällä hetkellä esimerkiksi kommentit eivät poistu, jos kuva poistetaan. Kommentit saattavat siirtyä johonkin myöhemmin lisättävään kuvaan.
 
 VÄLIPALAUTUS 2 FEEDBACK:
  -Funktio get_classes muutettu käymään sanakirja läpi yhdellä iteraatiolla

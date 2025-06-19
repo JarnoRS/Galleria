@@ -2,9 +2,13 @@ import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def get_user(user_id):
-    sql = "SELECT id, username, user_description FROM users WHERE id = ?"
-    
+    sql = "SELECT id, username, user_description FROM users WHERE id = ?"  
     result = db.query(sql, [user_id])
+    return result[0] if result else None
+
+def get_every_user():
+    sql = "SELECT id, username FROM users"
+    result = db.query(sql)
     return result[0] if result else None
 
 def get_users_images(user_id):
@@ -55,3 +59,16 @@ def get_profile_pic(user_id):
     sql = "SELECT profile_pic FROM users WHERE id = ?"
     result = db.query(sql, [user_id])
     return result[0][0] if result else None
+
+def delete(user_id):
+    sql = "DELETE FROM users WHERE id = ?"
+    db.execute(sql, [user_id])
+
+    sql = "DELETE FROM images WHERE user_id = ?"
+    db.execute(sql, [user_id])
+
+    sql = "DELETE FROM comments WHERE user_id = ?"
+    db.execute(sql, [user_id])
+
+    sql = "DELETE FROM grades WHERE user_id = ?"
+    db.execute(sql, [user_id])

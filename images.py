@@ -34,10 +34,12 @@ def update_image(image_id, title, image_description, genre):
 
 def delete_image(image_id):
     sql = "DELETE FROM images WHERE id = ?"
-        
     db.execute(sql, [image_id])
 
     sql = "DELETE FROM comments WHERE image_id = ?"
+    db.execute(sql, [image_id])
+
+    sql = "DELETE FROM grades WHERE image_id = ?"
     db.execute(sql, [image_id])
 
 def find_images(query, genre_query):

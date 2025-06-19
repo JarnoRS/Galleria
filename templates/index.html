@@ -6,14 +6,18 @@
 </head>
 
 <body>
+    <p>
+        <a href="/find_image">Etsi kuva</a>
+    </p>
+    <p>
+        <a href="/all_users">Selaa käyttäjiä</a>
+    </p>
+
     {% if session.username %}
     <p>
         Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id }}
     </p>
 
-    <p>
-        <a href="/find_image">Etsi kuva</a>
-    </p>
     <p>
         <a href="/add_image">Lisää kuva</a>
     </p>
@@ -30,10 +34,6 @@
     </p>
     
     <p>
-        <a href="/find_image">Etsi kuva</a>
-    </p>
-
-    <p>
         <a href="/login">Kirjaudu sisään</a>
     </p>
 
@@ -42,6 +42,7 @@
     </p>
 
     {% endif %}
+
 
     <h2>Kuvia</h2>
     <ul>
