@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Lista kaikista käyttäjistä</title>
+</head>
+
+<body>
+  <p>Lista kaikista käyttäjistä</p>
+    {% if every_user %}
+    <ul>
+        {% for user in every_user %}
+        <a href="/user/{{ user.id }}">{{ user.username }}</a>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  <p>
+    <a href="/">Takaisin</a>
+  </p>
+</body>
+
+</html>

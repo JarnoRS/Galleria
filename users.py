@@ -9,7 +9,7 @@ def get_user(user_id):
 def get_every_user():
     sql = "SELECT id, username FROM users"
     result = db.query(sql)
-    return result[0] if result else None
+    return result if result else None
 
 def get_users_images(user_id):
     sql = "SELECT id, title FROM images WHERE user_id = ? ORDER BY id DESC"

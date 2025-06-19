@@ -271,8 +271,8 @@ def update_user():
 
 @app.route("/all_users")
 def all_users():
-    users = users.get_every_user()
-    return render_template("every_user.html", users=users)
+    every_user = users.get_every_user()
+    return render_template("all_users.html", every_user=every_user)
 
 @app.route("/profile_pic/<int:user_id>")
 def show_profile_pic(user_id):
