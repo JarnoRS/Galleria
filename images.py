@@ -76,7 +76,8 @@ def add_comment(image_id, comment, user_id, date_added, image_title):
     db.execute(sql, [image_id, comment, user_id, date_added, image_title])
 
 def get_comments(image_id):
-    sql = """SELECT comments.comment,
+    sql = """SELECT comments.id,
+                    comments.comment,
                     comments.date_added,
                     comments.user_id,
                     users.username
@@ -86,6 +87,10 @@ def get_comments(image_id):
              ORDER BY comments.date_added DESC"""
     result = db.query(sql, [image_id])
     return result if result else None
+
+def delete_comment(comment_id, user_id):
+    sql = "DELETE FROM comments WHERE id = ? AND user_id =?"
+    db.execute(sql, [comment_id, user_id])
 
 def add_grade(image_id, user_id, grade):
     grade = int(grade)

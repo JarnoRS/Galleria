@@ -14,7 +14,7 @@
         <a href="/delete_image/{{ image.id }}">Poista kuva</a>
     </p>
     {% endif %}
-    <p>Kuvaus: {{ image.kuvaus }}</p>
+    <p>Kuvaus: {{ image.image_description }}</p>
     <p>Genre: {{ image.genre }}</p>
     <p>Käyttäjä: <a href="/user/{{ image.user_id }}">{{ image.username }}</a></p>
     <p>Lisätty: {{ image.date_added }}</p>
@@ -53,11 +53,22 @@
 
     {% if comments %}
     <h2>Kommentit</h2>
-    <ul>
-        {% for comment in comments %}
-        <li><a href="/user/{{ comment.user_id }}">{{ comment.username}}</a> {{ comment.date_added }} {{ comment.comment }}</li>>
-        {% endfor %}
-    </ul>
+    <form action="/delete_comments" method="post">
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>{{ comment.date_added }} {{ comment.comment }}
+                    {% if session.user_id == comment.user_id %}
+                    <input type="checkbox" name="comment_id" value="{{ comment.id }}">
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <p>
+            <input type="hidden" name="image_id" value="{{ image.id }}"/>
+            <input type="submit" value="Poista valitut"/>
+        </p>
+    </form>
     {% endif %}
 
     <p>

@@ -291,3 +291,14 @@ def show_picture(image_id):
     response = make_response(bytes(image))
     response.headers.set("Content-Type", "image/jpeg")
     return response
+
+@app.route("/delete_comments", methods=["POST"])
+def delete_comments():
+    require_login()
+    user_id = session["user_id"]
+    image_id = request.form["image_id"]
+    if not image_id:
+        abort(404)
+    for comment_id in request.form.getlist("comment_id"):
+        images.delete_comment(comment_id, user_id)
+    return redirect("/image/" + str(image_id))
