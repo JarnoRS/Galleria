@@ -1,42 +1,16 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Galleria</title>
-</head>
+{% block title %}Etusivu{% endblock %}
 
-<body>
-    <h1>Galleria</h1>
-    {% if session.username %}
-    Tervetuloa {{ session.username }}!
-    {% endif %}
-    {% if not session.user_id %}
-    Tervetuloa! Et ole vielä kirjautunut sisään.
-    {% endif %}
-    <p>
-        <a href="/find_image">Etsi kuva</a>
-        <a href="/all_users">Selaa käyttäjiä</a>
-        {% if session.user_id %}
-        <a href="/add_image">Lisää kuva</a>
-        <a href="/logout">Kirjaudu ulos</a>
-        {% endif %}
-        {% if not session.user_id %}
-        <a href="/login">Kirjaudu sisään</a>
-        <a href="/register">Luo tunnus</a>
-        {% endif %}
-    </p>
-
+{% block content %}
     <h2>Satunnaisia kuvia:</h2>
 
     <ul>
     {% for image in images %}
-    <li>
-        <a href="/image/{{ image.id }}">{{ image.title }}</a>
-        <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="150" height="150"/>
-    </li>
+        {{ image.title }}
+        <a href="/image/{{ image.id }}">
+            <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="250" height="250"/>
+        </a>
     {% endfor %}
     </ul>
-    
-    </body>
-
-</html>
+{% endblock %}

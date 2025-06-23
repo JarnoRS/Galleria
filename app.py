@@ -120,16 +120,32 @@ def delete_image(image_id):
         abort(404)
     if image["user_id"] != session["user_id"]:
         abort(403)
-
     if request.method == "GET":
         return render_template("delete_image.html", image=image)
-    
     if request.method == "POST":
         if "remove" in request.form:
             images.delete_image(image_id)
             return redirect("/")
         else:
             return redirect("/image/" + str(image_id))
+        
+@app.route("/delete_user", methods=["GET", "POST"])
+def delete_user():
+    require_login()
+    user_id = session["user_id"]
+    user = users.get_user(user_id)
+    if request.method == "GET":
+        return render_template("delete_user.html", user=user)
+    if request.method == "POST":
+        password = request.form["password"] 
+        if not users.check_login(user["username"], password):
+            return redirect("delete_user")
+        try:
+            users.delete(user_id)
+            session.clear()
+            return redirect("/")
+        except Exception as e:
+            return redirect("/user/" + str(user_id)) 
 
 @app.route("/find_image")
 def find_image():
@@ -228,25 +244,6 @@ def edit_user(user_id):
     user_id = session["user_id"]
     user = users.get_user(user_id)
     return render_template("edit_user.html", user=user)
-
-@app.route("/delete_user", methods=["GET", "POST"])
-def delete_user():
-    require_login()
-    user_id = session["user_id"]
-    user = users.get_user(user_id)
-    if request.method == "GET":
-        return render_template("delete_user.html", user=user)
-    if request.method == "POST":
-        username = user["username"]
-        password = request.form["password"] 
-        user_id = users.check_login(username, password)
-        if user_id:
-            del session["user_id"]
-            del session["username"]
-            users.delete(user_id)
-            return redirect("/")
-        else:
-            abort(403)
 
 @app.route("/update_user", methods=["POST"])
 def update_user():

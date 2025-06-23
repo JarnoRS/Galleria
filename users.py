@@ -45,6 +45,14 @@ def check_login(username, password):
         return user_id
     else:
         return None
+
+def verify_password(username, password):
+    sql = "SELECT password_hash FROM users WHERE username = ?"
+    result = db.query(sql, [username])
+    if not result:
+        return False
+    return check_password_hash(result[0]["password_hash"], password)
+
     
 def update_profile(user_id, image, user_description):
     if image == None:

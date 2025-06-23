@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Käyttäjä: {{ user.username }}</title>
-</head>
+{% block title %}{{ user.username }}{% endblock %}
 
-<body>
+{% block content %}
+  <h1>{{ user.username }}</h1>
+    <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän profiilikuva" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
     {% if session.user_id == user.id %}
     <p> 
-        <a href="/edit_user/{{ user.id }}">Muokkaa</a>
+        <form action="/edit_user/{{ user.id }}" method="get">
+          <input type="submit" value="Muokkaa käyttäjää">
+        </form>
+        <form action="/delete_user" method="get">
+          <input type="submit" value="Poista käyttäjä">
+        </form>
     </p>
     {% endif %}
-    <h1>{{ user.username }}</h1>
-    <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän profiilikuva" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
-    <h2>{{ user.kuvaus }}</h2>
-
+    <h2>{{ user.user_description }}</h2>
     {% if images | count > 1 %}
     <p>Käyttäjällä on yhteensä {{ images | count }} kuvaa.</p>
     {% elif images | count == 1 %}
@@ -23,28 +24,23 @@
     <p>Käyttäjä ei ole vielä lisännyt kuvia.</p>
     {% endif %}
     <h3>Käyttäjän kuvia</h3>
-    <ul>
+  <ul>
     {% for image in images %}
     <li>
-        <a href="/image/{{ image.id }}">
-          <img src="/picture/{{ image.id }}" width="150" height="150"/> 
-        </a>
+      <a href="/image/{{ image.id }}">
+        <img src="/picture/{{ image.id }}" width="150" height="150"/> 
+      </a>
     </li>
     {% endfor %}
-    </ul>
+  </ul>
 
-    <h2>Käyttäjän viimeisimmät kommentit:</h2>
-    {% if comments %}
+  <h3>Käyttäjän viimeisimmät kommentit:</h3>
+  {% if comments %}
     <ul>
-        {% for comment in comments %}
+      {% for comment in comments %}
         <a href="/image/{{ comment.image_id }}">{{ comment.image_title }}</a>
         <p>{{ comment.username}} {{ comment.date_added }} {{ comment.comment }}</p>>
-        {% endfor %}
+      {% endfor %}
     </ul>
-    {% endif %}
-    <p>
-      <a href="/">Takaisin</a>
-    </p>
-</body>
-
-</html>
+  {% endif %}
+{% endblock %}

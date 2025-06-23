@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>{{ image.title }}</title>
-</head>
+{% block title %}{{ image.title }}{% endblock %}
 
-<body>
+{% block content %}
     <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="150" height="150"/>
     <h1>{{ image.title }}</h1>
     {% if session.user_id == image.user_id %}
@@ -37,14 +34,12 @@
     </form>
     </p>
     {% endif %}
-
     <form action="/add_comment/{{ image.id }}" method="post">
         <input type="hidden" name="image_id" value="{{ image.id }}" />
         <input type="text" name="comment" maxlength="100"/>
         <input type="submit" value="Kommentoi" />
     </form>
     {% endif %}
-
     
     {% if grade_mean %}
     <h2>Kuvan arvosana:</h2>
@@ -70,10 +65,4 @@
         </p>
     </form>
     {% endif %}
-
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
-</body>
-
-</html>
+{% endblock %}

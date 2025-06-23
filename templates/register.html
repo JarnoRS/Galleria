@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Rekisteröinti</title>
-</head>
+{% block title %}Rekisteröidy{% endblock %}
 
-<body>
+{% block content %}
   <form action="/create" method="post" enctype="multipart/form-data">
     <p>
       Tunnus: <br />
@@ -28,6 +25,4 @@
     </p>
     <input type="submit" value="Luo tunnus"/>
   </form>
-</body>
-
-</html>
+{% endblock %}

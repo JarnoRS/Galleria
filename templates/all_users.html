@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Lista kaikista käyttäjistä</title>
-</head>
+{% block title %}Lista käyttäjistä{% endblock %}
 
-<body>
-  <p>Lista kaikista käyttäjistä</p>
+{% block content %}
+  <h1>Lista kaikista käyttäjistä:</h1>
     {% if every_user %}
     <ul>
         {% for user in every_user %}
@@ -14,9 +11,4 @@
         {% endfor %}
     </ul>
     {% endif %}
-  <p>
-    <a href="/">Takaisin</a>
-  </p>
-</body>
-
-</html>
+{% endblock %}
