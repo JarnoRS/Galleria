@@ -17,8 +17,8 @@ def require_login():
 
 @app.route("/")
 def index():
-    all_images = images.get_images()
-    return render_template("index.html", images=all_images)
+    sample_images = images.get_sample_images()
+    return render_template("index.html", images=sample_images)
 
 @app.route("/user/<int:user_id>", methods=["GET", "POST"])
 def show_user(user_id):

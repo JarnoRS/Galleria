@@ -2,12 +2,14 @@ import db
 
 def add_image(title, image_description, genre, user_id, date_added, image):
     sql = "INSERT INTO images (title, image_description, genre, user_id, date_added, image) VALUES (?, ?, ?, ?, ?, ?)"
-
     db.execute(sql, [title, image_description, genre, user_id, date_added, image])
 
 def get_images():
     sql = "SELECT id, title FROM images ORDER BY id DESC"
+    return db.query(sql)
 
+def get_sample_images():
+    sql = "SELECT id, title FROM images ORDER BY RANDOM() LIMIT 5"
     return db.query(sql)
 
 def get_image(image_id):
@@ -28,8 +30,7 @@ def update_image(image_id, title, image_description, genre):
     sql = """UPDATE images SET title = ?,
                                image_description = ?,
                                genre = ?
-                           WHERE id = ?"""
-        
+                           WHERE id = ?"""    
     db.execute(sql, [title, image_description, genre, image_id])
 
 def delete_image(image_id):
