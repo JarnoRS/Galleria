@@ -4,7 +4,7 @@
 
 {% block content %}
     <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="150" height="150"/>
-    <h1>{{ image.title }}</h1>
+    <h2>{{ image.title }}</h2>
     {% if session.user_id == image.user_id %}
     <p> 
         <a href="/edit_image/{{ image.id }}">Muokkaa</a>

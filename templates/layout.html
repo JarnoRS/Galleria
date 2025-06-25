@@ -3,32 +3,49 @@
 
 <head>
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/main.css">
 </head>
 
-<body>
-    <h1>Galleria</h1>
-    {% if session.username %}
-    Olet kirjautunut sisään käyttäjänä {{ session.username }}!
-    {% endif %}
-    {% if not session.user_id %}
-    Et ole vielä kirjautunut sisään.
-    {% endif %}
-    <p>
-        <a href="/">Etusivulle</a>
-        <a href="/find_image">Etsi kuva</a>
-        <a href="/all_users">Selaa käyttäjiä</a>
-        {% if session.user_id %}
-        <a href="/add_image">Lisää kuva</a>
-        <a href="/logout">Kirjaudu ulos</a>
+<div class="layout">
+    <body>
+        <div class="user">
+        {% if session.username %}
+            <div class="user_layout">
+                <img src="/profile_pic/{{ session.user_id }}" alt="Käyttäjän profiilikuva" width="100" height="100" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
+            </div>
+        {{ session.username }}
+        <li><a href="/user/{{ session.user_id }}">Oma käyttäjä</a></li>
         {% endif %}
         {% if not session.user_id %}
-        <a href="/login">Kirjaudu sisään</a>
-        <a href="/register">Luo tunnus</a>
+        Et ole vielä kirjautunut sisään.
         {% endif %}
-    </p>
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
-    </body>
+        </div>
+        <div class="main">
+            <div class="header">
+            <h1>Galleria</h1>
+            </div>
+            <div class="nav">
+                <nav>
+                    <ul>
+                        <li><a href="/">Etusivulle</a></li>
+                        <li><a href="/find_image">Etsi kuva</a></li>
+                        <li><a href="/all_users">Selaa käyttäjiä</a></li>
+                        {% if session.user_id %}
+                        <li><a href="/add_image">Lisää kuva</a></li>
+                        <li><a href="/logout">Kirjaudu ulos</a></li>
+                        {% endif %}
+                        {% if not session.user_id %}
+                        <li><a href="/login">Kirjaudu sisään</a></li>
+                        <li><a href="/register">Luo tunnus</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
 
+    </body>
+</div>
 </html>

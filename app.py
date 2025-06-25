@@ -138,7 +138,7 @@ def delete_user():
         return render_template("delete_user.html", user=user)
     if request.method == "POST":
         password = request.form["password"] 
-        if not users.check_login(user["username"], password):
+        if not users.verify_password(user["username"], password):
             return redirect("delete_user")
         try:
             users.delete(user_id)

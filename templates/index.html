@@ -5,12 +5,15 @@
 {% block content %}
     <h2>Satunnaisia kuvia:</h2>
 
-    <ul>
-    {% for image in images %}
-        {{ image.title }}
-        <a href="/image/{{ image.id }}">
-            <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="250" height="250"/>
-        </a>
-    {% endfor %}
-    </ul>
+    <div class="image_grid">
+        {% for image in images %}
+        <div class="index_img">
+            <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="200" height="200"/>
+            <a href="/image/{{ image.id }}">
+                <div class="image_title">{{ image.title }}</div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}
