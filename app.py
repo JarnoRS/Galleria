@@ -18,17 +18,25 @@ def require_login():
 @app.route("/")
 def index():
     sample_images = images.get_sample_images()
-    return render_template("index.html", images=sample_images)
+    chat = images.get_chat()
+    return render_template("index.html", images=sample_images, chat=chat)
+
+@app.route("/send_chat", methods=["POST"])
+def send_chat():
+    chat_message = request.form["chat_message"]
+    images.send_chat(session["username"], chat_message)
+    return redirect(request.referrer or '/')
 
 @app.route("/user/<int:user_id>", methods=["GET", "POST"])
 def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    images = users.get_users_images(user_id)
+    users_images = users.get_users_images(user_id)
     comments = users.get_user_comments(user_id) or []
     comments = comments[:3]
-    return render_template("show_user.html", user=user, images=images, comments=comments)
+    chat = images.get_chat()
+    return render_template("show_user.html", user=user, users_images=users_images, comments=comments, chat=chat)
 
 @app.route("/image/<int:image_id>", methods=["GET", "POST"])
 def show_image(image_id):
@@ -37,7 +45,8 @@ def show_image(image_id):
     grade_mean = images.get_grades(image_id)
     if not image:
         abort(404)
-    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean)
+    chat = images.get_chat()
+    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean, chat=chat)
 
 @app.route("/add_comment/<int:image_id>", methods=["POST"])
 def add_comment(image_id):
@@ -76,7 +85,8 @@ def add_grade(image_id):
 def add_image():
     require_login()
     classes = images.get_classes()
-    return render_template("add_image.html", classes=classes)
+    chat = images.get_chat()
+    return render_template("add_image.html", classes=classes, chat=chat)
 
 @app.route("/edit_image/<int:image_id>")
 def edit_image(image_id):
@@ -87,7 +97,8 @@ def edit_image(image_id):
         abort(404)
     if image["user_id"] != session["user_id"]:
         abort(403)
-    return render_template("edit_image.html", image=image, classes=classes)
+    chat = images.get_chat()
+    return render_template("edit_image.html", image=image, classes=classes, chat=chat)
 
 @app.route("/update_image", methods=["POST"])
 def update_image():
@@ -112,7 +123,8 @@ def update_image():
         abort(403)
 
     images.update_image(image_id, title, image_description, genre)
-    return redirect("/image/" + str(image_id))
+    chat = images.get_chat()
+    return redirect("/image/" + str(image_id), chat=chat)
 
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
 def delete_image(image_id):
@@ -123,7 +135,8 @@ def delete_image(image_id):
     if image["user_id"] != session["user_id"]:
         abort(403)
     if request.method == "GET":
-        return render_template("delete_image.html", image=image)
+        chat = images.get_chat()
+        return render_template("delete_image.html", image=image, chat=chat)
     if request.method == "POST":
         if "remove" in request.form:
             images.delete_image(image_id)
@@ -137,7 +150,8 @@ def delete_user():
     user_id = session["user_id"]
     user = users.get_user(user_id)
     if request.method == "GET":
-        return render_template("delete_user.html", user=user)
+        chat = images.get_chat()
+        return render_template("delete_user.html", user=user, chat=chat)
     if request.method == "POST":
         password = request.form["password"] 
         if not users.verify_password(user["username"], password):
@@ -163,7 +177,8 @@ def find_image():
     else:
         query = ""
         results= []
-    return render_template("find_image.html", query=query, genre_query=genre_query,results=results)
+    chat = images.get_chat()
+    return render_template("find_image.html", query=query, genre_query=genre_query,results=results, chat=chat)
 
 @app.route("/create_image", methods=["POST"])
 def create_image():
@@ -256,7 +271,8 @@ def edit_user(user_id):
     require_login()
     user_id = session["user_id"]
     user = users.get_user(user_id)
-    return render_template("edit_user.html", user=user)
+    chat = images.get_chat()
+    return render_template("edit_user.html", user=user, chat=chat)
 
 @app.route("/update_user", methods=["POST"])
 def update_user():
@@ -276,15 +292,17 @@ def update_user():
         if user_id != session["user_id"]:
             abort(403)
         users.update_profile(user_id, image, user_description)
-        return redirect("/user/" + str(user_id))
+        chat = images.get_chat()
+        return redirect("/user/" + str(user_id), chat=chat)
     else:
         users.update_profile(user_id, None, user_description)
-        return redirect("/user/" + str(user_id))
+        return redirect("/user/" + str(user_id), chat=chat)
 
 @app.route("/all_users")
 def all_users():
     every_user = users.get_every_user()
-    return render_template("all_users.html", every_user=every_user)
+    chat = images.get_chat()
+    return render_template("all_users.html", every_user=every_user, chat=chat)
 
 @app.route("/profile_pic/<int:user_id>")
 def show_profile_pic(user_id):

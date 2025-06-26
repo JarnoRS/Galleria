@@ -24,15 +24,15 @@
     <p>Käyttäjä ei ole vielä lisännyt kuvia.</p>
     {% endif %}
     <h3>Käyttäjän kuvia</h3>
-  <ul>
+  <div class="image_grid">
     {% for image in images %}
-    <li>
-      <a href="/image/{{ image.id }}">
-        <img src="/picture/{{ image.id }}" width="150" height="150"/> 
-      </a>
-    </li>
+    <div class="index_img">
+        <a href="/image/{{ image.id }}">
+          <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="200" height="200"/>
+        </a>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
 
   <h3>Käyttäjän viimeisimmät kommentit:</h3>
   {% if comments %}

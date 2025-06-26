@@ -19,6 +19,24 @@
         {% if not session.user_id %}
         Et ole vielä kirjautunut sisään.
         {% endif %}
+        <p>___________________________</p>
+        <p>CHAT</p>
+        {% if session.user_id %}
+        <div class="chat">
+            <form action="/send_chat" method="post">
+                <input type="text" name="chat_message" maxlength="100"/>
+                <input type="submit" value="Lähetä chat" />
+            </form>
+            {% if chat %}
+                {% for message in chat %}
+                    <p>{{ message.user }}:{{ message.messages }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+        {% if not session.user_id %}
+            Kirjaudu sisään käyttääksesi chat-toimintoa.
+        {% endif %}
         </div>
         <div class="main">
             <div class="header">

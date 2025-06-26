@@ -124,3 +124,11 @@ def get_picture(image_id):
     sql = "SELECT image FROM images WHERE id = ?"
     result = db.query(sql, [image_id])
     return result[0][0] if result else None
+
+def send_chat(user, chat_message):
+    sql = "INSERT INTO chatbox (user, messages) VALUES (?, ?)"
+    db.execute(sql, [user, chat_message])
+
+def get_chat():
+    sql = "SELECT user, messages FROM chatbox ORDER BY id DESC LIMIT 8"
+    return db.query(sql)

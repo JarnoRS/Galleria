@@ -46,5 +46,6 @@ CREATE TABLE classes (
 
 CREATE TABLE chatbox (
     id INTEGER PRIMARY KEY,
-    message TEXT
-)
+    user TEXT,
+    messages TEXT
+);
