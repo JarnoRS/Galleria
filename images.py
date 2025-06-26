@@ -9,7 +9,7 @@ def get_images():
     return db.query(sql)
 
 def get_sample_images():
-    sql = "SELECT id, title FROM images ORDER BY RANDOM() LIMIT 5"
+    sql = "SELECT id, title FROM images ORDER BY RANDOM() LIMIT 8"
     return db.query(sql)
 
 def get_image(image_id):

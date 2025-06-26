@@ -3,10 +3,10 @@
 {% block title %}Poista käyttäjä{% endblock %}
 
 {% block content %}
-<p>Haluatko varmasti poistaa käyttäjäsi?</p>
-<form action="/delete_user" method="post">
-    <input type="text" name="password" attribute="Syötä salasanasi">
-    <input type="submit" name="remove" value="Poista käyttäjä">
-    <input type="submit" name="back" value="Palaa takaisin">
-</form>
+    <p>Haluatko varmasti poistaa käyttäjäsi?</p>
+    <form action="/delete_user" method="post">
+        <input type="text" name="password" attribute="Syötä salasanasi">
+        <input type="submit" name="remove" value="Poista käyttäjä">
+        <input type="submit" name="back" value="Palaa takaisin">
+    </form>
 {% endblock %}

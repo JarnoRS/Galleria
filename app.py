@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, request, session, make_response
+from flask import abort, redirect, render_template, request, session, make_response, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
 import config
@@ -95,10 +95,12 @@ def update_image():
     image_id = request.form["image_id"]
     title = request.form["title"]
     if not title or len(title) > 50:
-        abort(403)
+        flash("VIRHE: Tyhjä otsikko tai otsikon pituus yli 50 merkkiä")
+        return redirect("/edit_image")
     image_description = request.form["description"]
     if len(image_description) > 1000:
-        abort(403)
+        flash("VIRHE: Kuvauksen pituus yli 1000 merkkiä")
+        return redirect("/edit_image")
     genre = request.form["genre"]
     classes = images.get_classes()
     if genre not in classes["genre"]:
@@ -139,6 +141,7 @@ def delete_user():
     if request.method == "POST":
         password = request.form["password"] 
         if not users.verify_password(user["username"], password):
+            flash("VIRHE: Väärä salasana")
             return redirect("delete_user")
         try:
             users.delete(user_id)
@@ -167,20 +170,24 @@ def create_image():
     require_login()
     title = request.form["title"]
     if not title or len(title) > 50:
-        abort(403)
+        flash("VIRHE: Tyhjä otsikko tai otsikon pituus yli 50 merkkiä")
+        return redirect("/add_image")
     image_description = request.form["description"]
     if len(image_description) > 1000:
-        abort(403)
+        flash("VIRHE: Kuvauksen pituus yli 1000 merkkiä")
+        return redirect("/add_image")
     genre = request.form["genre"]
     classes = images.get_classes()
     if genre not in classes["genre"]:
         abort(403)
     file = request.files["profile_pic"]
     if not file.filename.endswith(".jpg"):
-        return "VIRHE: väärä tiedostomuoto"
+        flash("VIRHE: Lähettämäsi tiedosto ei ole jpg-tiedosto")
+        return redirect("/add_image")
     image = file.read()
     if len(image) > 1000 * 1024:
-        return "VIRHE: liian suuri kuva"
+        flash("VIRHE: Lähettämäsi tiedosto on liian suuri (Yli 1 mt)")
+        return redirect("/add_image")
     user_id = session["user_id"]
     date_added = date.today()
     images.add_image(title, image_description, genre, user_id, date_added, image)
@@ -200,18 +207,23 @@ def create():
     file = request.files["profile_pic"]
     if file and file.filename:
         if not file.filename.endswith(".jpg"):
-            return "VIRHE: väärä tiedostomuoto"
+            flash("VIRHE: Lähettämäsi tiedosto ei ole jpg-tiedosto")
+            return redirect("/register")
         profile_pic = file.read()
         if len(profile_pic) > 100 * 1024:
-            return "VIRHE: liian suuri kuva"
+            flash("VIRHE: Lähettämäsi tiedosto on liian suuri (Yli 100 kt)")
+            return redirect("/register")
     if len(password1) < 5:
-        return "VIRHE: Salasanan pituuden tulee olla vähintään 5 merkkiä."
+        flash("VIRHE: Antamasi salasana on liian lyhyt (Alle 5 merkkiä)")
+        return redirect("/register")
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"  
+        flash("VIRHE: Antamasi salasanat eivät täsmää")
+        return redirect("/register")
     try:
         users.create_user(username, password1, user_description, profile_pic)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        flash("VIRHE: Tunnus on jo käytössä")
+        return redirect("/register")
     return render_template("user_created.html", username=username)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -229,7 +241,8 @@ def login():
             session["username"] = username
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: Väärä tunnus tai salasana")
+            return redirect("/login")
 
 @app.route("/logout")
 def logout():
@@ -253,10 +266,12 @@ def update_user():
     user_description = request.form["description"]
     if file:
         if not file.filename.endswith(".jpg"):
-            return "VIRHE: väärä tiedostomuoto"
+            flash("VIRHE: Lähettämäsi tiedosto ei ole jpg-tiedosto")
+            return redirect("/edit_user")
         image = file.read()
         if len(image) > 100 * 1024:
-            return "VIRHE: liian suuri kuva"
+            flash("VIRHE: Lähettämäsi tiedosto on liian suuri (Yli 100 kt)")
+            return redirect("/edit_user")
         user_id = session["user_id"]
         if user_id != session["user_id"]:
             abort(403)

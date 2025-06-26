@@ -75,6 +75,14 @@ body {
     color: #333;
 }
 
+.info {
+    border: 2px solid black;
+    margin: 1em;
+    padding: 0.5em;
+    background-color: blue;
+    color: white;
+}
+
 h1 {
     font-size:25px;
     margin: 0;

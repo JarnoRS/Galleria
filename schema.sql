@@ -43,3 +43,8 @@ CREATE TABLE classes (
     title TEXT,
     value TEXT
 );
+
+CREATE TABLE chatbox (
+    id INTEGER PRIMARY KEY,
+    message TEXT
+)
