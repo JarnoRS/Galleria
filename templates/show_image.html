@@ -30,6 +30,7 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
         <input type="submit" value="Lähetä arvosana" />
     </form>
     </p>
@@ -37,6 +38,7 @@
     <form action="/add_comment/{{ image.id }}" method="post">
         <input type="hidden" name="image_id" value="{{ image.id }}" />
         <input type="text" name="comment" maxlength="100"/>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
         <input type="submit" value="Kommentoi" />
     </form>
     {% endif %}
@@ -61,6 +63,7 @@
         </ul>
         <p>
             <input type="hidden" name="image_id" value="{{ image.id }}"/>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
             <input type="submit" value="Poista valitut"/>
         </p>
     </form>

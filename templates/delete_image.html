@@ -8,6 +8,7 @@
   <p>Haluatko varmasti poistaa kuvan?</p>
   <form action="/delete_image/{{ image.id }}" method="post">
       <input type="submit" name="remove" value="Poista kuva">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
       <input type="submit" name="back" value="Palaa takaisin">
   </form>
 {% endblock %}

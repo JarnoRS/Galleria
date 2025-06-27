@@ -25,6 +25,7 @@
         <div class="chat">
             <form action="/send_chat" method="post">
                 <input type="text" name="chat_message" maxlength="100"/>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
                 <input type="submit" value="Lähetä chat" />
             </form>
             {% if chat %}

@@ -7,6 +7,7 @@ import config
 import db
 import images
 import users
+import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -23,11 +24,13 @@ def index():
 
 @app.route("/send_chat", methods=["POST"])
 def send_chat():
+    require_login()
+    check_csrf()
     chat_message = request.form["chat_message"]
     images.send_chat(session["username"], chat_message)
     return redirect(request.referrer or '/')
 
-@app.route("/user/<int:user_id>", methods=["GET", "POST"])
+@app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
@@ -38,7 +41,7 @@ def show_user(user_id):
     chat = images.get_chat()
     return render_template("show_user.html", user=user, users_images=users_images, comments=comments, chat=chat)
 
-@app.route("/image/<int:image_id>", methods=["GET", "POST"])
+@app.route("/image/<int:image_id>")
 def show_image(image_id):
     image = images.get_image(image_id)
     comments = images.get_comments(image_id)
@@ -51,6 +54,7 @@ def show_image(image_id):
 @app.route("/add_comment/<int:image_id>", methods=["POST"])
 def add_comment(image_id):
     require_login()
+    check_csrf()
     image = images.get_image(image_id)
     if not image:
         abort(404)
@@ -68,6 +72,7 @@ def add_comment(image_id):
 @app.route("/add_grade/<int:image_id>", methods=["POST"])
 def add_grade(image_id):
     require_login()
+    check_csrf()
     image = images.get_image(image_id)
     if not image:
         abort(404)
@@ -103,6 +108,7 @@ def edit_image(image_id):
 @app.route("/update_image", methods=["POST"])
 def update_image():
     require_login()
+    check_csrf()
     image_id = request.form["image_id"]
     title = request.form["title"]
     if not title or len(title) > 50:
@@ -126,9 +132,35 @@ def update_image():
     chat = images.get_chat()
     return redirect("/image/" + str(image_id), chat=chat)
 
+@app.route("/update_user", methods=["POST"])
+def update_user():
+    require_login()
+    check_csrf()
+    user_id = request.form["user_id"]
+    file = request.files["image"]
+    user_description = request.form["description"]
+    if file:
+        if not file.filename.endswith(".jpg"):
+            flash("VIRHE: Lähettämäsi tiedosto ei ole jpg-tiedosto")
+            return redirect("/edit_user")
+        image = file.read()
+        if len(image) > 100 * 1024:
+            flash("VIRHE: Lähettämäsi tiedosto on liian suuri (Yli 100 kt)")
+            return redirect("/edit_user")
+        user_id = session["user_id"]
+        if user_id != session["user_id"]:
+            abort(403)
+        users.update_profile(user_id, image, user_description)
+        chat = images.get_chat()
+        return redirect("/user/" + str(user_id), chat=chat)
+    else:
+        users.update_profile(user_id, None, user_description)
+        return redirect("/user/" + str(user_id))
+
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
 def delete_image(image_id):
     require_login()
+    check_csrf()
     image = images.get_image(image_id)
     if not image:
         abort(404)
@@ -147,6 +179,7 @@ def delete_image(image_id):
 @app.route("/delete_user", methods=["GET", "POST"])
 def delete_user():
     require_login()
+    check_csrf()
     user_id = session["user_id"]
     user = users.get_user(user_id)
     if request.method == "GET":
@@ -183,6 +216,7 @@ def find_image():
 @app.route("/create_image", methods=["POST"])
 def create_image():
     require_login()
+    check_csrf()
     title = request.form["title"]
     if not title or len(title) > 50:
         flash("VIRHE: Tyhjä otsikko tai otsikon pituus yli 50 merkkiä")
@@ -254,6 +288,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("VIRHE: Väärä tunnus tai salasana")
@@ -273,30 +308,6 @@ def edit_user(user_id):
     user = users.get_user(user_id)
     chat = images.get_chat()
     return render_template("edit_user.html", user=user, chat=chat)
-
-@app.route("/update_user", methods=["POST"])
-def update_user():
-    require_login()
-    user_id = request.form["user_id"]
-    file = request.files["image"]
-    user_description = request.form["description"]
-    if file:
-        if not file.filename.endswith(".jpg"):
-            flash("VIRHE: Lähettämäsi tiedosto ei ole jpg-tiedosto")
-            return redirect("/edit_user")
-        image = file.read()
-        if len(image) > 100 * 1024:
-            flash("VIRHE: Lähettämäsi tiedosto on liian suuri (Yli 100 kt)")
-            return redirect("/edit_user")
-        user_id = session["user_id"]
-        if user_id != session["user_id"]:
-            abort(403)
-        users.update_profile(user_id, image, user_description)
-        chat = images.get_chat()
-        return redirect("/user/" + str(user_id), chat=chat)
-    else:
-        users.update_profile(user_id, None, user_description)
-        return redirect("/user/" + str(user_id), chat=chat)
 
 @app.route("/all_users")
 def all_users():
@@ -325,6 +336,7 @@ def show_picture(image_id):
 @app.route("/delete_comments", methods=["POST"])
 def delete_comments():
     require_login()
+    check_csrf()
     user_id = session["user_id"]
     image_id = request.form["image_id"]
     if not image_id:
@@ -332,3 +344,7 @@ def delete_comments():
     for comment_id in request.form.getlist("comment_id"):
         images.delete_comment(comment_id, user_id)
     return redirect("/image/" + str(image_id))
+
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)

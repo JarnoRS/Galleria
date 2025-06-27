@@ -25,6 +25,7 @@
     </p>
     {% endfor %}
     <input type="hidden" name="image_id" value="{{ image.id }}" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
     <input type="submit" value="Päivitä muutokset" />
   </form>
 {% endblock %}
