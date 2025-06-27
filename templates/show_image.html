@@ -11,7 +11,7 @@
         <a href="/delete_image/{{ image.id }}">Poista kuva</a>
     </p>
     {% endif %}
-    <p>Kuvaus: {{ image.image_description }}</p>
+    <p>Kuvaus: {{ image.image_description | show_lines }}</p>
     <p>Genre: {{ image.genre }}</p>
     <p>Käyttäjä: <a href="/user/{{ image.user_id }}">{{ image.username }}</a></p>
     <p>Lisätty: {{ image.date_added }}</p>

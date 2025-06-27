@@ -15,7 +15,7 @@
         </form>
     </p>
     {% endif %}
-    <h2>{{ user.user_description }}</h2>
+    <h2>{{ user.user_description | show_lines }}</h2>
     {% if images | count > 1 %}
     <p>Käyttäjällä on yhteensä {{ images | count }} kuvaa.</p>
     {% elif images | count == 1 %}

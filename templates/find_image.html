@@ -3,7 +3,7 @@
 {% block title %}Etsi kuva{% endblock %}
 
 {% block content %}
-    <h2>Etsi kuva</h2>
+    <h2>Etsi kuvia</h2>
     <form action="/find_image" method="get">
         <p>
             Hakusana: <input type="text" name="query" value="{{ query }}">
@@ -15,15 +15,20 @@
             <input type="checkbox" name="genre" value="Taide" /> Taide
             <input type="checkbox" name="genre" value="Tapahtumat" /> Tapahtumat
         </p>    
-        <input type="submit" value="Lähetä">
+        <input type="submit" value="Hae">
     </form>
 
     {% if query or genre_query %}
-    <h2>Tulokset</h2>
-    <ul>
-        {% for result in results %}
-        <li><a href="/image/{{ result.id }}">{{ result.title }}</a></li>
-        {% endfor %}
-    </ul>
+        <h2>Tulokset:</h2>
+        <div class="image_grid">
+            {% for image in results %}
+            <div class="index_img">
+                <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="200" height="200"/>
+                <a href="/image/{{ image.id }}">
+                    <div class="image_title">{{ image.title }}</div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}
