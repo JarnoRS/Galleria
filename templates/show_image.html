@@ -3,7 +3,7 @@
 {% block title %}{{ image.title }}{% endblock %}
 
 {% block content %}
-    <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="150" height="150"/>
+    <img src="/picture/{{ image.id }}" alt="Kuva: {{ image.title }}" width="150" height="150"/>
     <h2>{{ image.title }}</h2>
     {% if session.user_id == image.user_id %}
     <p> 
@@ -20,9 +20,9 @@
 
     {% if session.user_id != image.user_id %}
     <p>
-        Arvostele kuva: <br />
     <form action="/add_grade/{{ image.id }}" method="post">
-        <select name="grade">
+        <label for="grade">Anna kuvalle arvosana:</label><br />
+        <select name="grade" id="grade">
             <option value="">(valitse)</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -36,8 +36,9 @@
     </p>
     {% endif %}
     <form action="/add_comment/{{ image.id }}" method="post">
-        <input type="hidden" name="image_id" value="{{ image.id }}" />
-        <input type="text" name="comment" maxlength="100"/>
+        <input type="hidden" name="image_id" value="{{ image.id }}"/>
+        <label for="comment">Kommentoi:</label><br />
+        <input type="text" name="comment" id="comment" maxlength="100"/>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
         <input type="submit" value="Kommentoi" />
     </form>

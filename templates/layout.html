@@ -11,7 +11,7 @@
         <div class="user">
         {% if session.username %}
             <div class="user_layout">
-                <img src="/profile_pic/{{ session.user_id }}" alt="Käyttäjän profiilikuva" width="100" height="100" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
+                <img src="/profile_pic/{{ session.user_id }}" alt="Käyttäjäsi profiilikuva" width="100" height="100" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
             </div>
         {{ session.username }}
         <li><a href="/user/{{ session.user_id }}">Oma käyttäjä</a></li>
@@ -20,11 +20,11 @@
         Et ole vielä kirjautunut sisään.
         {% endif %}
         <p>___________________________</p>
-        <p>CHAT</p>
         {% if session.user_id %}
         <div class="chat">
             <form action="/send_chat" method="post">
-                <input type="text" name="chat_message" maxlength="100"/>
+                <label for="chat">CHAT:</label><br />
+                <input type="text" if="chat" name="chat_message" maxlength="100"/>
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
                 <input type="submit" value="Lähetä chat" />
             </form>

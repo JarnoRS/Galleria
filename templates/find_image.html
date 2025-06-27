@@ -6,7 +6,8 @@
     <h2>Etsi kuvia</h2>
     <form action="/find_image" method="get">
         <p>
-            Hakusana: <input type="text" name="query" value="{{ query }}">
+            <label for="text">Hakusana</label><br />           
+            <input type="text" id="text" name="query" value="{{ query }}">
         </p>
         <p>Etsi genren mukaan:</p>
             <input type="checkbox" name="genre" value="Luonto" /> Luonto
@@ -23,7 +24,7 @@
         <div class="image_grid">
             {% for image in results %}
             <div class="index_img">
-                <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="200" height="200"/>
+                <img src="/picture/{{ image.id }}" alt="Kuva: {{ image.title }}" width="200" height="200"/>
                 <a href="/image/{{ image.id }}">
                     <div class="image_title">{{ image.title }}</div>
                 </a>

@@ -5,28 +5,29 @@
 {% block content %}
   <form action="/create_image" method="post" enctype="multipart/form-data">
     <p>
-      Otsikko: <br />
-      <input type="text" name="title" maxlength="50" required/>
+      <label for="title">Otsikko:</label><br />
+      <input type="text" name="title" id="title" maxlength="50" required/>
     </p>
     <p>
-      Lataa kuva: <input type="file" name="profile_pic" accept=".jpg" />
+      <label for="upload">Lataa kuva:</label><br />
+      <input type="file" name="profile_pic" id="upload" accept=".jpg" />
     </p>
     <p>
-      Kuvaus: <br />
-      <textarea name="description" rows="8" cols="40" maxlength="1000"></textarea>
+      <label for="description">Kuvaus:</label><br />
+      <textarea name="description" id="description" rows="8" cols="40" maxlength="1000"></textarea>
     </p>
     {% for class in classes %}
     <p>
-        {{ class }}: <br />
-        <select name="genre">
-            <option value="">(valitse)</option>
-        {% for option in classes[class] %}
-            <option value="{{ option }}">{{ option }}</option>
-        {% endfor %}
-    </select>
+      <label for="class{{ class }}">Luokka:</label><br />
+      <select name="genre" id="class{{ class }}">
+        <option value="">(valitse)</option>
+      {% for option in classes[class] %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+      </select>
     </p>
     {% endfor %}
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
     <input type="submit" value="Lisää kuva" />
   </form>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block content %}
   <h2>{{ user.username }}</h2>
-    <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän profiilikuva" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
+    <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän {{ user.username }} profiilikuva" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
     {% if session.user_id == user.id %}
     <p> 
         <form action="/edit_user/{{ user.id }}" method="get">
@@ -28,7 +28,7 @@
     {% for image in images %}
     <div class="index_img">
         <a href="/image/{{ image.id }}">
-          <img src="/picture/{{ image.id }}" alt="{{ image.title }}" width="200" height="200"/>
+          <img src="/picture/{{ image.id }}" alt="Kuva: {{ image.title }}" width="200" height="200"/>
         </a>
     </div>
     {% endfor %}
