@@ -3,24 +3,27 @@
 {% block title %}Kirjaudu sisään{% endblock %}
 
 {% block content %}
-  {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Kirjaudu ulos</a>
-  </p>
-  {% else %}
-  <form action="/login" method="post">
+  <div class="box">
+    <h2>Kirjaudu sisään: </h2>
+    {% if session.username %}
     <p>
-      <label for="username">Käyttäjätunnus:</label><br/>
-      <input type="text" name="username" id="username"/>
+      Olet kirjautunut nimellä {{ session.username }}
     </p>
     <p>
-      <label for="passwd">Salasana:</label><br />
-      <input type="password" name="password" id="passwd"/>
+      <a href="/logout">Kirjaudu ulos</a>
     </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  {% endif %}
+    {% else %}
+    <form action="/login" method="post">
+      <p>
+        <label for="username">Käyttäjätunnus:</label><br/>
+        <input type="text" name="username" id="username"/>
+      </p>
+      <p>
+        <label for="passwd">Salasana:</label><br />
+        <input type="password" name="password" id="passwd"/>
+      </p>
+      <input type="submit" value="Kirjaudu" />
+    </form>
+    {% endif %}
+  </div>
 {% endblock %}

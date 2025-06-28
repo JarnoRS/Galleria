@@ -1,3 +1,10 @@
+:root{
+    --background-color: rgb(23, 23, 82);
+    --content-box-color: rgb(35, 67, 153);
+    --content-box-color-2: rgb(54, 70, 141);
+    --global-font-color: rgb(106, 198, 221); 
+}
+
 html {
     margin: 0;
 }
@@ -6,7 +13,7 @@ body {
     margin: 1em;
     max-width: 75em;
     font-family: sans-serif;
-    background-color: rgb(47, 47, 179);
+    background-color: var(--background-color);
 }
 
 .layout {
@@ -17,33 +24,46 @@ body {
 .user {
     width: 200px; 
     height: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--content-box-color);
     font-size: 12px;
     text-align: center;
     padding: 0.5em;
-    box-sizing: border-box;
+    color: var(--global-font-color);
 }
 
 .user_layout {
-    border: 2px solid black;
     margin-top: 5px;
     font-size: 16px;
-    color: #333;
+}
+
+.chat {
+    margin: 0.2em;
+    background-color: var(--content-box-color-2);
+    color: var(--global-font-color);
+}
+
+.chat_msg {
+    text-align: left;
+    margin-left: 5px;
 }
 
 .main{
     flex: 1;
     width: 600px;
-    padding: 0.5em;
+    padding: 0 0.5em 0.5em 0.5em;
 }
 
 .header {
-    background-color: black;
-    color: red;
+    background-color: var(--content-box-color);
+    color: white ;
     padding: 1em;
-    margin: 0.5em 0;
 }
-  
+
+.header p{
+    font-size: 10px;
+    padding: 0;
+}
+
 .nav {
     background-color: lightgrey;
     font-size: 12px;
@@ -52,7 +72,7 @@ body {
 }
 
 .content {
-    background-color: white;
+    background-color: var(--content-box-color);
     padding: 1em;
     margin: 0.5em 0;
 } 
@@ -69,10 +89,25 @@ body {
     width: 32%;
 }
 
+.show_image{
+    text-align: center;
+    color: var(--global-font-color);
+}
+
 .image_title {
-    margin-top: 5px;
-    font-size: 16px;
-    color: #333;
+    margin: 0.1em 0 1em 0;
+    font-size: 12px;
+    text-align: center;
+    color: var(--global-font-color);
+}
+
+.box{
+    background-color: var(--content-box-color-2);
+    color: var(--global-font-color);
+}
+
+.comment_msg {
+    margin-left: 5px;
 }
 
 .info {
@@ -83,14 +118,24 @@ body {
     color: white;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+}
+
 h1 {
     font-size:25px;
     margin: 0;
+    color: var(--global-font-color);
 }
 
 h2 {
-    font-size:20px;
+    font-size:16px;
     margin: 0;
+    color: var(--global-font-color);
 }
 
 nav {

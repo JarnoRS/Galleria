@@ -3,33 +3,37 @@
 {% block title %}Etsi kuva{% endblock %}
 
 {% block content %}
-    <h2>Etsi kuvia</h2>
-    <form action="/find_image" method="get">
-        <p>
-            <label for="text">Hakusana</label><br />           
-            <input type="text" id="text" name="query" value="{{ query }}">
-        </p>
-        <p>Etsi genren mukaan:</p>
-            <input type="checkbox" name="genre" value="Luonto" /> Luonto
-            <input type="checkbox" name="genre" value="Kaupunki" /> Kaupunki
-            <input type="checkbox" name="genre" value="Ihmiset" /> Ihmiset
-            <input type="checkbox" name="genre" value="Taide" /> Taide
-            <input type="checkbox" name="genre" value="Tapahtumat" /> Tapahtumat
-        </p>    
-        <input type="submit" value="Hae">
-    </form>
+    <div class="box">
+        <h2>Etsi kuvia</h2>
+        <form action="/find_image" method="get">
+            <p>
+                <label for="text">Hakusanalla:</label><br />           
+                <input type="text" id="text" name="query" value="{{ query }}">
+            </p>
+            <p>Etsi genren mukaan:</p>
+                <input type="checkbox" name="genre" value="Luonto" /> Luonto
+                <input type="checkbox" name="genre" value="Kaupunki" /> Kaupunki
+                <input type="checkbox" name="genre" value="Ihmiset" /> Ihmiset
+                <input type="checkbox" name="genre" value="Taide" /> Taide
+                <input type="checkbox" name="genre" value="Tapahtumat" /> Tapahtumat
+            </p>    
+            <input type="submit" value="Hae">
+        </form>
+    </div><br/>
 
-    {% if query or genre_query %}
-        <h2>Tulokset:</h2>
-        <div class="image_grid">
-            {% for image in results %}
-            <div class="index_img">
-                <img src="/picture/{{ image.id }}" alt="Kuva: {{ image.title }}" width="200" height="200"/>
-                <a href="/image/{{ image.id }}">
+    <div class="box">
+        {% if query or genre_query %}
+            <h2>Tulokset:</h2>
+            <div class="image_grid">
+                {% for image in results %}
+                <div class="index_img">
+                    <a href="/image/{{ image.id }}">
+                        <img src="/picture/{{ image.id }}" alt="Kuva: {{ image.title }}" width="200" height="200"/>
+                    </a>
                     <div class="image_title">{{ image.title }}</div>
-                </a>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

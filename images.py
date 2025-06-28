@@ -90,8 +90,9 @@ def get_comments(image_id):
     return result if result else None
 
 def delete_comment(comment_id, user_id):
-    sql = "DELETE FROM comments WHERE id = ? AND user_id =?"
-    db.execute(sql, [comment_id, user_id])
+    deletion = "Käyttäjä on poistanut kommentin."
+    sql = "UPDATE comments SET comment = ? WHERE id = ? AND user_id = ?"
+    db.execute(sql, [deletion, comment_id, user_id])
 
 def add_grade(image_id, user_id, grade):
     grade = int(grade)

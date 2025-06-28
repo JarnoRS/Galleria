@@ -14,7 +14,6 @@
                 <img src="/profile_pic/{{ session.user_id }}" alt="Käyttäjäsi profiilikuva" width="100" height="100" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
             </div>
         {{ session.username }}
-        <li><a href="/user/{{ session.user_id }}">Oma käyttäjä</a></li>
         {% endif %}
         {% if not session.user_id %}
         Et ole vielä kirjautunut sisään.
@@ -24,13 +23,15 @@
         <div class="chat">
             <form action="/send_chat" method="post">
                 <label for="chat">CHAT:</label><br />
-                <input type="text" if="chat" name="chat_message" maxlength="100"/>
+                <input type="text" name="chat_message" id="chat" maxlength="100"/>
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
                 <input type="submit" value="Lähetä chat" />
             </form>
             {% if chat %}
                 {% for message in chat %}
-                    <p>{{ message.user }}:{{ message.messages }}</p>
+                    <div class="chat_msg">
+                        <p>{{ message.user }}: {{ message.messages }}</p>
+                    </div>
                 {% endfor %}
             {% endif %}
         </div>
@@ -41,7 +42,8 @@
         </div>
         <div class="main">
             <div class="header">
-            <h1>Galleria</h1>
+            <h1>Tervetuloa Galleriaan!</h1>
+            <p>Kirjaudu sisään jakaaksesi kuvia muiden käyttäjien kanssa!</p>
             </div>
             <div class="nav">
                 <nav>
@@ -51,6 +53,7 @@
                         <li><a href="/all_users">Selaa käyttäjiä</a></li>
                         {% if session.user_id %}
                         <li><a href="/add_image">Lisää kuva</a></li>
+                        <li><a href="/user/{{ session.user_id }}">Oma käyttäjä</a></li>
                         <li><a href="/logout">Kirjaudu ulos</a></li>
                         {% endif %}
                         {% if not session.user_id %}

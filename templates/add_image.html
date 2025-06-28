@@ -3,31 +3,34 @@
 {% block title %}Lisää kuva{% endblock %}
 
 {% block content %}
-  <form action="/create_image" method="post" enctype="multipart/form-data">
-    <p>
-      <label for="title">Otsikko:</label><br />
-      <input type="text" name="title" id="title" maxlength="50" required/>
-    </p>
-    <p>
-      <label for="upload">Lataa kuva:</label><br />
-      <input type="file" name="profile_pic" id="upload" accept=".jpg" />
-    </p>
-    <p>
-      <label for="description">Kuvaus:</label><br />
-      <textarea name="description" id="description" rows="8" cols="40" maxlength="1000"></textarea>
-    </p>
-    {% for class in classes %}
-    <p>
-      <label for="class{{ class }}">Luokka:</label><br />
-      <select name="genre" id="class{{ class }}">
-        <option value="">(valitse)</option>
-      {% for option in classes[class] %}
-        <option value="{{ option }}">{{ option }}</option>
+  <div class="box">
+    <h2>Lisää kuva:</h2>
+    <form action="/create_image" method="post" enctype="multipart/form-data">
+      <p>
+        <label for="title">Otsikko:</label><br />
+        <input type="text" name="title" id="title" maxlength="50" required/>
+      </p>
+      <p>
+        <label for="upload">Lataa kuva:</label><br />
+        <input type="file" name="profile_pic" id="upload" accept=".jpg" />
+      </p>
+      <p>
+        <label for="description">Kuvaus:</label><br />
+        <textarea name="description" id="description" rows="8" cols="40" maxlength="1000"></textarea>
+      </p>
+      {% for class in classes %}
+      <p>
+        <label for="class{{ class }}">Luokka:</label><br />
+        <select name="genre" id="class{{ class }}">
+          <option value="">(valitse)</option>
+        {% for option in classes[class] %}
+          <option value="{{ option }}">{{ option }}</option>
+        {% endfor %}
+        </select>
+      </p>
       {% endfor %}
-      </select>
-    </p>
-    {% endfor %}
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
-    <input type="submit" value="Lisää kuva" />
-  </form>
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
+      <input type="submit" value="Lisää kuva" />
+    </form>
+  </div>
 {% endblock %}
