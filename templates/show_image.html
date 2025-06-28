@@ -14,58 +14,61 @@
         {% if grade_mean %}
             <p>Arvosana: {{ grade_mean }}</p>
         {% endif %}
-        <p>{{ image.image_description | show_lines }}</p>
+        <p>Kuvaus: {{ image.image_description | show_lines }}</p>
     </div>
 
     {% if session.user_id %}
 
-    {% if session.user_id != image.user_id %}
+        {% if session.user_id != image.user_id %}
+        <div class="box">
+            <p>
+                <form action="/add_grade/{{ image.id }}" method="post">
+                    <label for="grade">Anna kuvalle arvosana:</label><br />
+                    <select name="grade" id="grade">
+                        <option value="">(valitse)</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
+                    <input type="submit" value="Lähetä arvosana" />
+                </form>
+            </p>
+        </div>
+        {% endif %}
+    {% endif %}
     <div class="box">
-        <p>
-            <form action="/add_grade/{{ image.id }}" method="post">
-                <label for="grade">Anna kuvalle arvosana:</label><br />
-                <select name="grade" id="grade">
-                    <option value="">(valitse)</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+        {% if session.user_id %}
+            <form action="/add_comment/{{ image.id }}" method="post">
+                <input type="hidden" name="image_id" value="{{ image.id }}"/>
+                <label for="comment">Kommenttikenttä:</label><br />
+                <input type="text" name="comment" id="comment" maxlength="100"/>
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
-                <input type="submit" value="Lähetä arvosana" />
+                <input type="submit" value="Lähetä kommentti" />
             </form>
-        </p>
-    </div>
-    {% endif %}
+        {% else %}
+            <p>Kommenttikenttä:</p>
+        {% endif %}
 
-    <div class="box">
-    <form action="/add_comment/{{ image.id }}" method="post">
-        <input type="hidden" name="image_id" value="{{ image.id }}"/>
-        <label for="comment">Kommenttikenttä:</label><br />
-        <input type="text" name="comment" id="comment" maxlength="100"/>
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
-        <input type="submit" value="Lähetä kommentti" />
-    </form>
-    {% endif %}
-
-    {% if comments %}
-    <form action="/delete_comments" method="post">
-            {% for comment in comments %}
-                <p class="comment_msg">
-                    <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.comment }} ({{ comment.date_added }})
-                    {% if session.user_id == comment.user_id %}
-                        <input type="checkbox" name="comment_id" value="{{ comment.id }}">
-                    {% endif %}
-                </p>
-            {% endfor %}
-        <p>
-            <input type="hidden" name="image_id" value="{{ image.id }}"/>
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
-            <input type="submit" value="Poista valitut"/>
-        </p>
-    </form>
-    {% endif %}
+        {% if comments %}
+        <form action="/delete_comments" method="post">
+                {% for comment in comments %}
+                    <p class="comment_msg">
+                        <a href="/user/{{ comment.user_id }}">{{ comment.username}}</a>: {{ comment.comment }} ({{ comment.date_added }})
+                        {% if session.user_id == comment.user_id %}
+                            <input type="checkbox" name="comment_id" value="{{ comment.id }}">
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            <p>
+                <input type="hidden" name="image_id" value="{{ image.id }}"/>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"/>
+                <input type="submit" value="Poista valitut"/>
+            </p>
+        </form>
+        {% endif %}
     </div>
     {% if session.user_id == image.user_id %}
     <p> 
