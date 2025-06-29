@@ -34,6 +34,11 @@ body {
 .user_layout {
     margin-top: 5px;
     font-size: 16px;
+    margin: 0 0 5px 50px;
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    text-align: center;
 }
 
 .chat {
@@ -89,8 +94,22 @@ body {
     width: 32%;
 }
 
+.show_user{
+    display: flex;
+}
+
 .show_image{
+    flex: 1;
     text-align: center;
+    color: var(--global-font-color);
+    margin: 0;
+    width: 300px;
+    height: 300px;
+}
+
+.user_info_box{
+    flex: 1;
+    background-color: var(--content-box-color-2);
     color: var(--global-font-color);
 }
 
@@ -127,15 +146,20 @@ a:visited {
 }
 
 h1 {
-    font-size:25px;
+    font-size: 25px;
     margin: 0;
     color: var(--global-font-color);
 }
 
 h2 {
-    font-size:16px;
-    margin: 0;
+    font-size: 16px;
+    margin-left: 5px;
+    margin-top: 5px;
     color: var(--global-font-color);
+}
+
+p{
+    margin-left: 5px;
 }
 
 nav {

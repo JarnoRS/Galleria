@@ -3,23 +3,26 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-  <div class="show_image">
-    <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän {{ user.username }} profiilikuva" onerror="this.outerHTML='<p>Käyttäjä ei ole asettanut profiilikuvaa.</p>';" />
+  <div class="show_user">
+    <div class="show_image">
+      <img src="/profile_pic/{{ user.id }}" alt="Käyttäjän {{ user.username }} profiilikuva" width="300px" height="300px"/>
+    </div>
+    <br/>
+    <div class="user_info_box">
+      <h2>Tietoja käyttäjästä:</h2>
+      <p>Käyttäjä: {{ user.username }}</p>
+      <p>Kuvaus: {{ user.user_description | show_lines }}</p>
+      {% if images | count > 1 %}
+      <p>Käyttäjällä on yhteensä {{ users_images | count }} kuvaa.</p>
+      {% elif images | count == 1 %}
+      <p>Käyttäjällä on yhteensä {{ users_images | count }} kuva.</p>
+      {% else %}
+      <p>Käyttäjä ei ole vielä lisännyt kuvia.</p>
+      {% endif %}
+    </div>
   </div>
   <br/>
-  <div class="box">
-    <h2>Tietoja käyttäjästä:</h2>
-    <p>Käyttäjä: {{ user.username }}</p>
-    <p>Kuvaus: {{ user.user_description | show_lines }}</p>
-    {% if images | count > 1 %}
-    <p>Käyttäjällä on yhteensä {{ users_images | count }} kuvaa.</p>
-    {% elif images | count == 1 %}
-    <p>Käyttäjällä on yhteensä {{ users_images | count }} kuva.</p>
-    {% else %}
-    <p>Käyttäjä ei ole vielä lisännyt kuvia.</p>
-    {% endif %}
-  </div>
-
+  
   <div class="box">
     <h2>Käyttäjän kuvia:</h2>
     <div class="image_grid">
