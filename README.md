@@ -26,20 +26,20 @@ Sovellusta voi käyttää myös kirjautumatta, mutta tällöin voi vain katsoa m
 ## KURSSIIN LIITTYVÄÄ ASIAA:
 
 VÄLIPALAUTUS 2 FEEDBACK:
- -Funktio get_classes muutettu käymään sanakirja läpi yhdellä iteraatiolla
- -Korjattu schema-tiedostoon puuttuvat pilkut
- -Korjattu bugi, jossa kuvan poistaminen ei poista kuvaan liittyviä kommentteja
- -Lisätty sivu, joka vahvistaa käyttäjän luomisen ja ohjaa takaisin etusivulle
+ * Funktio get_classes muutettu käymään sanakirja läpi yhdellä iteraatiolla
+ * Korjattu schema-tiedostoon puuttuvat pilkut
+ * Korjattu bugi, jossa kuvan poistaminen ei poista kuvaan liittyviä kommentteja
+ * Lisätty sivu, joka vahvistaa käyttäjän luomisen ja ohjaa takaisin etusivulle
 
  VÄLIPALAUTUS 3 FEEDBACK:
- -Estetty käyttäjän luominen ilman käyttäjänimeä tai salasanaa
- -Lisätty README:hin käynnistysohjeet
- -Siistitty koodista pois suomenkieliset muuttujien nimet
- -Paikattu CSRF-aukot
- -Lisätty flash-virheviestit
- -Poistettu turhat importit
- -Poistettu turhat else-haarat
- -Poistettu tietokantatiedosto versiohallinnasta
+ * Estetty käyttäjän luominen ilman käyttäjänimeä tai salasanaa
+ * Lisätty README:hin käynnistysohjeet
+ * Siistitty koodista pois suomenkieliset muuttujien nimet
+ * Paikattu CSRF-aukot
+ * Lisätty flash-virheviestit
+ * Poistettu turhat importit
+ * Poistettu turhat else-haarat
+ * Poistettu tietokantatiedosto versiohallinnasta
 
 ## PUUTTEITA / BUGEJA 
  * Sovellusta ei ole testattu suurella tietomäärällä
