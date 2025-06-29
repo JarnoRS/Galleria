@@ -12,9 +12,9 @@
       <h2>Tietoja käyttäjästä:</h2>
       <p>Käyttäjä: {{ user.username }}</p>
       <p>Kuvaus: {{ user.user_description | show_lines }}</p>
-      {% if images | count > 1 %}
+      {% if users_images | count > 1 %}
       <p>Käyttäjällä on yhteensä {{ users_images | count }} kuvaa.</p>
-      {% elif images | count == 1 %}
+      {% elif users_images | count == 1 %}
       <p>Käyttäjällä on yhteensä {{ users_images | count }} kuva.</p>
       {% else %}
       <p>Käyttäjä ei ole vielä lisännyt kuvia.</p>

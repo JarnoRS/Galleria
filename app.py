@@ -260,7 +260,6 @@ def show_image(image_id):
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
 def delete_image(image_id):
     require_login()
-    check_csrf()
     image = images.get_image(image_id)
     if not image:
         abort(404)
@@ -270,6 +269,7 @@ def delete_image(image_id):
         chat = images.get_chat()
         return render_template("delete_image.html", image=image, chat=chat)
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             images.delete_image(image_id)
             return redirect("/")
