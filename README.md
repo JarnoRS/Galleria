@@ -3,28 +3,27 @@
 Gallerian perusajatuksena on jakaa kuvia muiden käyttäjien kanssa.
 
 Sovelluksen toiminnallisuuksia:
- -Sovellukseen voi luoda käyttäjän (Käyttäjän voi halutessaan myös poistaa)
- -Kuvahaku joko hakusanan tai kuvan luokittelun perusteella
- -Erilliset kuvasivut, joissa näkyy kuvan lisäksi siihen liittyvää tietoa (kuvaus, lisäysajankohta, kommentit yms.)
- -Erilliset käyttäjäsivut, joista näkee käyttäjän tietoja (kuvat, kommentit yms.)
+ * Sovellukseen voi luoda käyttäjän (Käyttäjän voi halutessaan myös poistaa)
+ * Kuvahaku joko hakusanan tai kuvan luokittelun perusteella
+ * Erilliset kuvasivut, joissa näkyy kuvan lisäksi siihen liittyvää tietoa (kuvaus, lisäysajankohta, kommentit yms.)
+ * Erilliset käyttäjäsivut, joista näkee käyttäjän tietoja (kuvat, kommentit yms.)
 
 Sovellukseen kirjautunut käyttäjä voi:
- -Lisätä ja poistaa kuviaan
- -Kommentoida omia ja muiden käyttäjien kuvia
- -Antaa arvosanan muiden käyttäjien kuville
- -Osallistua chat-keskusteluun muiden käyttäjien kanssa
+ * Lisätä ja poistaa kuviaan
+ * Kommentoida omia ja muiden käyttäjien kuvia
+ * Antaa arvosanan muiden käyttäjien kuville
+ * Osallistua chat-keskusteluun muiden käyttäjien kanssa
 
 Sovellusta voi käyttää myös kirjautumatta, mutta tällöin voi vain katsoa muiden lisäämiä kuvia ja muiden käyttäjien tietoja.
 
-KUINKA KÄYNNISTÄT SOVELLUKSEN (LINUX):
+## KUINKA KÄYNNISTÄT SOVELLUKSEN (LINUX):
 1. Kopioi sovelluksen repositorio laitteellesi ja mene hakemiston juureen (/Galleria).
-2. Aja komento "source venv/bin/activate" käynnistääksesi Pythonin virtuaaliympäristön.
-3. Asenna flask komennolla "pip install flask".
-4. Valmistele tietokanta suorittamalla komennot "sqlite3 database.db < schema.sql" ja "sqlite3 database.db < init.sql".
-5. Aja komento "flask run" ja voit siirtyä sovelluksen etusivulle.
+2. Aja komento "$ source venv/bin/activate" käynnistääksesi Pythonin virtuaaliympäristön.
+3. Asenna flask komennolla "$ pip install flask".
+4. Valmistele tietokanta suorittamalla komennot "$ sqlite3 database.db < schema.sql" ja "$ sqlite3 database.db < init.sql".
+5. Aja komento "$ flask run" ja voit siirtyä sovelluksen etusivulle.
 
-***************************************************************************************
-KURSSIIN LIITTYVÄÄ ASIAA:
+## KURSSIIN LIITTYVÄÄ ASIAA:
 
 VÄLIPALAUTUS 2 FEEDBACK:
  -Funktio get_classes muutettu käymään sanakirja läpi yhdellä iteraatiolla
@@ -37,3 +36,7 @@ VÄLIPALAUTUS 2 FEEDBACK:
  -Lisätty README:hin käynnistysohjeet
  -Siistitty koodista pois suomenkieliset muuttujien nimet
 
+## PUUTTEITA / BUGEJA 
+ * Sovellusta ei ole testattu suurella tietomäärällä
+ * Sivutusta ei ole tehty
+ * show_image.html:n "<div class="show_image">" muuttuu renderöinnissä jostain syystä muotoon "<div class="show_image">"
