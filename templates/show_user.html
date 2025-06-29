@@ -19,6 +19,12 @@
       {% else %}
       <p>Käyttäjä ei ole vielä lisännyt kuvia.</p>
       {% endif %}
+      {% if session.user_id == user.id %}
+      <p> 
+        <a href="/edit_user/{{ user.id }}">Muokkaa käyttäjää</a>
+        <a href="/delete_user">Poista käyttäjä</a>
+      </p>
+      {% endif %}
     </div>
   </div>
   <br/>
@@ -46,11 +52,4 @@
         {% endfor %}
     {% endif %}
   </div>
-  
-  {% if session.user_id == user.id %}
-    <p> 
-      <a href="/edit_user/{{ user.id }}">Muokkaa käyttäjää</a>
-      <a href="/delete_user">Poista käyttäjä</a>
-    </p>
-  {% endif %}
 {% endblock %}
