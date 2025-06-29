@@ -39,4 +39,4 @@ VÄLIPALAUTUS 2 FEEDBACK:
 ## PUUTTEITA / BUGEJA 
  * Sovellusta ei ole testattu suurella tietomäärällä
  * Sivutusta ei ole tehty
- * show_image.html:n "<div class="show_image">" muuttuu renderöinnissä jostain syystä muotoon "<div class="show_image">"
+ * show_image.html:n yhden div:n luokka muuttuu "show_image":sta "box":ksi renderöinnin aikana
