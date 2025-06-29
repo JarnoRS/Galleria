@@ -2,7 +2,7 @@ import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def get_user(user_id):
-    sql = "SELECT id, username, user_description FROM users WHERE id = ?"  
+    sql = "SELECT id, username, user_description FROM users WHERE id = ?"
     result = db.query(sql, [user_id])
     return result[0] if result else None
 
@@ -55,7 +55,7 @@ def verify_password(username, password):
 
     
 def update_profile(user_id, image, user_description):
-    if image == None:
+    if image is None:
         sql = "UPDATE users SET user_description = ? WHERE id = ?"
         db.execute(sql, [user_description, user_id])
     else:

@@ -30,7 +30,7 @@ def update_image(image_id, title, image_description, genre):
     sql = """UPDATE images SET title = ?,
                                image_description = ?,
                                genre = ?
-                           WHERE id = ?"""    
+                           WHERE id = ?"""
     db.execute(sql, [title, image_description, genre, image_id])
 
 def delete_image(image_id):
@@ -56,8 +56,7 @@ def find_images(query, genre_query):
         sql = """SELECT id, title
                  FROM images
                  WHERE genre IN ({})
-                 ORDER BY id DESC""".format(','.join('?' for _ in genre_query))
-        
+                 ORDER BY id DESC""".format(','.join('?' for _ in genre_query))     
         return db.query(sql, genre_query)
 
     elif query and genre_query:
@@ -66,7 +65,6 @@ def find_images(query, genre_query):
                  WHERE (title LIKE ? OR image_description LIKE ?)
                  AND genre IN ({})
                  ORDER BY id DESC""".format(','.join('?' for _ in genre_query))
-        
         like = "%" + query + "%"
         return db.query(sql, [like, like] + genre_query)
     

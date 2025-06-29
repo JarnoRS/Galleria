@@ -98,7 +98,7 @@ body {
     display: flex;
 }
 
-.show_image{
+.show_user_image{
     flex: 1;
     text-align: center;
     color: var(--global-font-color);
@@ -110,6 +110,11 @@ body {
 .user_info_box{
     flex: 1;
     background-color: var(--content-box-color-2);
+    color: var(--global-font-color);
+}
+
+.show_image{
+    text-align: center;
     color: var(--global-font-color);
 }
 

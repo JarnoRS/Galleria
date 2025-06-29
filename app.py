@@ -4,7 +4,6 @@ from datetime import datetime, date
 
 from flask import Flask
 from flask import abort, redirect, render_template, request, session, make_response, flash
-from werkzeug.security import check_password_hash, generate_password_hash
 import markupsafe
 
 import config
@@ -36,17 +35,15 @@ def login():
 
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]
-        
+        password = request.form["password"]       
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("VIRHE: Väärä tunnus tai salasana")
-            return redirect("/login")
+        flash("VIRHE: Väärä tunnus tai salasana")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():
@@ -115,11 +112,9 @@ def update_user():
         if user_id != session["user_id"]:
             abort(403)
         users.update_profile(user_id, image, user_description)
-        chat = images.get_chat()
-        return redirect("/user/" + str(user_id), chat=chat)
-    else:
-        users.update_profile(user_id, None, user_description)
         return redirect("/user/" + str(user_id))
+    users.update_profile(user_id, None, user_description)
+    return redirect("/user/" + str(user_id))
 
 @app.route("/delete_user", methods=["GET", "POST"])
 def delete_user():
@@ -276,8 +271,7 @@ def delete_image(image_id):
         if "remove" in request.form:
             images.delete_image(image_id)
             return redirect("/")
-        else:
-            return redirect("/image/" + str(image_id))
+        return redirect("/image/" + str(image_id))
 
 @app.route("/send_chat", methods=["POST"])
 def send_chat():
@@ -307,8 +301,6 @@ def add_comment(image_id):
         date_added = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         image_title = image["title"]
         images.add_comment(image_id, comment, user_id, date_added, image_title)
-    comments = images.get_comments(image_id)
-    grade_mean = images.get_grades(image_id)
     return redirect("/image/" + str(image_id))
 
 @app.route("/delete_comments", methods=["POST"])
@@ -336,8 +328,6 @@ def add_grade(image_id):
         user_id = session["user_id"]
         if grade:
             images.add_grade(image_id, user_id, grade)
-    comments = images.get_comments(image_id)
-    grade_mean = images.get_grades(image_id)
     return redirect("/image/" + str(image_id))
 
 @app.route("/picture/<int:image_id>")
