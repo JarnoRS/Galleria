@@ -1,7 +1,8 @@
 import db
 
 def add_image(title, image_description, genre, user_id, date_added, image):
-    sql = "INSERT INTO images (title, image_description, genre, user_id, date_added, image) VALUES (?, ?, ?, ?, ?, ?)"
+    sql = """INSERT INTO images (title, image_description, genre, user_id, date_added, image) 
+            VALUES (?, ?, ?, ?, ?, ?)"""
     db.execute(sql, [title, image_description, genre, user_id, date_added, image])
 
 def get_images():
@@ -56,7 +57,7 @@ def find_images(query, genre_query):
         sql = """SELECT id, title
                  FROM images
                  WHERE genre IN ({})
-                 ORDER BY id DESC""".format(','.join('?' for _ in genre_query))     
+                 ORDER BY id DESC""".format(','.join('?' for _ in genre_query))
         return db.query(sql, genre_query)
 
     elif query and genre_query:
@@ -71,7 +72,8 @@ def find_images(query, genre_query):
     return []
 
 def add_comment(image_id, comment, user_id, date_added, image_title):
-    sql = "INSERT INTO comments (image_id, comment, user_id, date_added, image_title) VALUES (?, ?, ?, ?, ?)"
+    sql = """INSERT INTO comments (image_id, comment, user_id, date_added, image_title) 
+            VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [image_id, comment, user_id, date_added, image_title])
 
 def get_comments(image_id):

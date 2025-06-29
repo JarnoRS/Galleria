@@ -31,7 +31,8 @@ def get_user_comments(user_id):
 
 def create_user(username, password, user_description, profile_pic):
     password_hash = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password_hash, user_description, profile_pic) VALUES (?, ?, ?, ?)"
+    sql = """INSERT INTO users (username, password_hash, user_description, profile_pic) 
+            VALUES (?, ?, ?, ?)"""
     db.execute(sql, [username, password_hash, user_description, profile_pic])
 
 def check_login(username, password):
@@ -53,7 +54,6 @@ def verify_password(username, password):
         return False
     return check_password_hash(result[0]["password_hash"], password)
 
-    
 def update_profile(user_id, image, user_description):
     if image is None:
         sql = "UPDATE users SET user_description = ? WHERE id = ?"
@@ -61,7 +61,6 @@ def update_profile(user_id, image, user_description):
     else:
         sql = "UPDATE users SET profile_pic = ?, user_description = ? WHERE id = ?"
         db.execute(sql, [image, user_description, user_id])
-
 
 def get_profile_pic(user_id):
     sql = "SELECT profile_pic FROM users WHERE id = ?"
@@ -80,3 +79,4 @@ def delete(user_id):
 
     sql = "DELETE FROM grades WHERE user_id = ?"
     db.execute(sql, [user_id])
+    

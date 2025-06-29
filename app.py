@@ -35,7 +35,7 @@ def login():
 
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]       
+        password = request.form["password"]   
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
@@ -126,7 +126,7 @@ def delete_user():
         return render_template("delete_user.html", user=user, chat=chat)
     if request.method == "POST":
         check_csrf()
-        password = request.form["password"] 
+        password = request.form["password"]
         if not users.verify_password(user["username"], password):
             flash("VIRHE: Väärä salasana")
             return redirect("delete_user")
@@ -135,7 +135,7 @@ def delete_user():
             session.clear()
             return redirect("/")
         except Exception as e:
-            return redirect("/user/" + str(user_id)) 
+            return redirect("/user/" + str(user_id))
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -146,7 +146,8 @@ def show_user(user_id):
     comments = users.get_user_comments(user_id) or []
     comments = comments[:3]
     chat = images.get_chat()
-    return render_template("show_user.html", user=user, users_images=users_images, comments=comments, chat=chat)
+    return render_template("show_user.html", user=user, 
+                           users_images=users_images, comments=comments, chat=chat)
 
 @app.route("/all_users")
 def all_users():
@@ -243,7 +244,8 @@ def find_image():
         query = ""
         results= []
     chat = images.get_chat()
-    return render_template("find_image.html", query=query, genre_query=genre_query,results=results, chat=chat)
+    return render_template("find_image.html", query=query, 
+                           genre_query=genre_query,results=results, chat=chat)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
@@ -253,7 +255,8 @@ def show_image(image_id):
     if not image:
         abort(404)
     chat = images.get_chat()
-    return render_template("show_image.html", image=image, comments=comments, grade_mean=grade_mean, chat=chat)
+    return render_template("show_image.html", image=image, 
+                           comments=comments, grade_mean=grade_mean, chat=chat)
 
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
 def delete_image(image_id):
