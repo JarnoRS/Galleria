@@ -1,5 +1,5 @@
-import db
 from werkzeug.security import check_password_hash, generate_password_hash
+import db
 
 def get_user(user_id):
     sql = "SELECT id, username, user_description FROM users WHERE id = ?"
@@ -31,7 +31,7 @@ def get_user_comments(user_id):
 
 def create_user(username, password, user_description, profile_pic):
     password_hash = generate_password_hash(password)
-    sql = """INSERT INTO users (username, password_hash, user_description, profile_pic) 
+    sql = """INSERT INTO users (username, password_hash, user_description, profile_pic)
             VALUES (?, ?, ?, ?)"""
     db.execute(sql, [username, password_hash, user_description, profile_pic])
 
@@ -44,8 +44,7 @@ def check_login(username, password):
     password_hash = result[0][1]
     if check_password_hash(password_hash, password):
         return user_id
-    else:
-        return None
+    return None
 
 def verify_password(username, password):
     sql = "SELECT password_hash FROM users WHERE username = ?"
@@ -79,4 +78,3 @@ def delete(user_id):
 
     sql = "DELETE FROM grades WHERE user_id = ?"
     db.execute(sql, [user_id])
-    

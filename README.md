@@ -35,6 +35,11 @@ VÄLIPALAUTUS 2 FEEDBACK:
  -Estetty käyttäjän luominen ilman käyttäjänimeä tai salasanaa
  -Lisätty README:hin käynnistysohjeet
  -Siistitty koodista pois suomenkieliset muuttujien nimet
+ -Paikattu CSRF-aukot
+ -Lisätty flash-virheviestit
+ -Poistettu turhat importit
+ -Poistettu turhat else-haarat
+ -Poistettu tietokantatiedosto versiohallinnasta
 
 ## PUUTTEITA / BUGEJA 
  * Sovellusta ei ole testattu suurella tietomäärällä

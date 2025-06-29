@@ -22,7 +22,7 @@
       <p>
         <label for="class{{ class }}">Luokka:</label><br />
         <select name="genre" id="class{{ class }}">
-          <option value="">(valitse)</option>
+          <option value="Ei luokitusta">(valitse)</option>
         {% for option in classes[class] %}
           <option value="{{ option }}">{{ option }}</option>
         {% endfor %}

@@ -1,7 +1,7 @@
 import db
 
 def add_image(title, image_description, genre, user_id, date_added, image):
-    sql = """INSERT INTO images (title, image_description, genre, user_id, date_added, image) 
+    sql = """INSERT INTO images (title, image_description, genre, user_id, date_added, image)
             VALUES (?, ?, ?, ?, ?, ?)"""
     db.execute(sql, [title, image_description, genre, user_id, date_added, image])
 
@@ -68,11 +68,10 @@ def find_images(query, genre_query):
                  ORDER BY id DESC""".format(','.join('?' for _ in genre_query))
         like = "%" + query + "%"
         return db.query(sql, [like, like] + genre_query)
-    
     return []
 
 def add_comment(image_id, comment, user_id, date_added, image_title):
-    sql = """INSERT INTO comments (image_id, comment, user_id, date_added, image_title) 
+    sql = """INSERT INTO comments (image_id, comment, user_id, date_added, image_title)
             VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [image_id, comment, user_id, date_added, image_title])
 

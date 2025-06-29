@@ -7,7 +7,6 @@ from flask import abort, redirect, render_template, request, session, make_respo
 import markupsafe
 
 import config
-import db
 import images
 import users
 
@@ -35,7 +34,7 @@ def login():
 
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]   
+        password = request.form["password"]
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
@@ -146,7 +145,7 @@ def show_user(user_id):
     comments = users.get_user_comments(user_id) or []
     comments = comments[:3]
     chat = images.get_chat()
-    return render_template("show_user.html", user=user, 
+    return render_template("show_user.html", user=user,
                            users_images=users_images, comments=comments, chat=chat)
 
 @app.route("/all_users")
@@ -244,7 +243,7 @@ def find_image():
         query = ""
         results= []
     chat = images.get_chat()
-    return render_template("find_image.html", query=query, 
+    return render_template("find_image.html", query=query,
                            genre_query=genre_query,results=results, chat=chat)
 
 @app.route("/image/<int:image_id>")
@@ -255,7 +254,7 @@ def show_image(image_id):
     if not image:
         abort(404)
     chat = images.get_chat()
-    return render_template("show_image.html", image=image, 
+    return render_template("show_image.html", image=image,
                            comments=comments, grade_mean=grade_mean, chat=chat)
 
 @app.route("/delete_image/<int:image_id>", methods=["GET", "POST"])
@@ -282,7 +281,7 @@ def send_chat():
     check_csrf()
     chat_message = request.form["chat_message"]
     images.send_chat(session["username"], chat_message)
-    return redirect(request.referrer or '/')
+    return redirect(request.referrer or "/")
 
 @app.route("/")
 def index():
