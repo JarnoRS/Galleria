@@ -18,10 +18,11 @@ Sovellusta voi käyttää myös kirjautumatta, mutta tällöin voi vain katsoa m
 
 ## KUINKA KÄYNNISTÄT SOVELLUKSEN (LINUX):
 1. Kopioi sovelluksen repositorio laitteellesi ja mene hakemiston juureen (/Galleria).
-2. Aja komento "$ source venv/bin/activate" käynnistääksesi Pythonin virtuaaliympäristön.
-3. Asenna flask komennolla "$ pip install flask".
-4. Valmistele tietokanta suorittamalla komennot "$ sqlite3 database.db < schema.sql" ja "$ sqlite3 database.db < init.sql".
-5. Aja komento "$ flask run" ja voit siirtyä sovelluksen etusivulle.
+2. Luo Pythonin virtuaaliympäristö kommenolla "$ python3 -m venv venv".
+3. Aja komento "$ source venv/bin/activate" käynnistääksesi Pythonin virtuaaliympäristön.
+4. Asenna flask komennolla "$ pip install flask".
+5. Valmistele tietokanta suorittamalla komennot "$ sqlite3 database.db < schema.sql" ja "$ sqlite3 database.db < init.sql".
+6. Aja komento "$ flask run" ja voit siirtyä sovelluksen etusivulle.
 
 ## KURSSIIN LIITTYVÄÄ ASIAA:
 
